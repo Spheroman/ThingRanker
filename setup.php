@@ -1,8 +1,11 @@
 <?php
+// page.com/setup/[id]
 require "comp.php";
-//basically have to show a table with all the things along with stats
-//options to remove, add, reset, and delete
-
+/*TODO: proper HTML and CSS,
+  TODO:add other options such as ranking method and pairing method
+  TODO: add a pin to lock the setup page
+  TODO: add options to add items, delete items, reset the competition, to delete the competition, and to reset the deletion timer (just update updated in database)
+*/
 echo "<table style='border: solid 1px black;'>";
 echo "<tr><th>Rank</th><th>Name</th><th>Elo</th></tr>";
 
@@ -34,9 +37,10 @@ try {
 }
 $conn = null;
 echo "</table>";
-echo "<form action='setup.php?id=$id' method='POST'>
+echo "<form action='add.php' method='POST'>
 thingy Name: <label>
     <input type='text' name='name'>
+    <input type='text' name='id'>
 </label><br>
 <input type='submit'>
 </form>";
