@@ -21,19 +21,20 @@ try {
     $tmp = $comp->id . "(id)";
     //generate items table
     $sql = "CREATE TABLE $comp->id (
-        id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-        name VARCHAR(50) NOT NULL,
-        rating SMALLINT NOT NULL,
-        confidence SMALLINT NOT NULL
-    );";
+    id int auto_increment primary key,
+    name varchar(50) not null,
+    rating smallint default 1000,
+    confidence smallint default 500
+);";
     $conn->exec($sql);
     //TODO: move match history table generation to when the competition starts
     //generate match history table
-    $sql = "CREATE TABLE $comp->id"."_h2h (
+    $sql = "CREATE TABLE $comp->id" . "_h2h (
+        id int AUTO_INCREMENT PRIMARY KEY,
         p1 int NOT NULL,
         p2 int NOT NULL,
-        winner int NOT NULL,
-        player VARCHAR(20) NOT NULL, 
+        winner int,
+        player VARCHAR(20), 
         FOREIGN KEY(p1) REFERENCES $tmp,
         FOREIGN KEY(p2) REFERENCES $tmp,
         FOREIGN KEY(winner) REFERENCES $tmp
@@ -41,7 +42,7 @@ try {
     $conn->exec($sql);
     $_SESSION["comp"] = $comp;
 
-    $sql = "INSERT INTO comps (id, name, time) VALUES ('$comp->id', '$comp->name',  now())";
+    $sql = "INSERT INTO comps (id, name) VALUES ('$comp->id', '$comp->name')";
     $conn->exec($sql);
 
     $sname = $_SERVER['SERVER_NAME'];
