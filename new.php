@@ -20,12 +20,23 @@ try {
     $conn->exec($sql);
     $tmp = $comp->id . "(id)";
     //generate items table
-    $sql = "CREATE TABLE $comp->id (
+    $sql = "
+CREATE TABLE $comp->id (
     id int auto_increment primary key,
     name varchar(50) not null,
     rating smallint default 1000,
     confidence smallint default 500
-);";
+);
+create trigger $comp->id" . "trigger
+    after insert
+    on $comp->id
+    for each row
+begin
+    update comps
+    set updated = NOW()
+    where id = '$comp->id';
+end;
+";
     $conn->exec($sql);
     //TODO: move match history table generation to when the competition starts
     //generate match history table
