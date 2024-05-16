@@ -39,4 +39,4 @@ if (!$check) {
 }
 
 
-header("Location: /setup/" . $_POST["id"]); //redirect to /setup page
+header("Location: /" . $_POST["redirect"] . "/" . $_POST["id"]); //redirect to /setup page
