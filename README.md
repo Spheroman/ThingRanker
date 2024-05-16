@@ -24,8 +24,8 @@ Then for every entry in the comps table, theres a new table with name `id`, wher
   <tr>
     <td>an auto incrementing integer starting at 1</td>
     <td>name of the entry in the competition</td>
-    <td>the Glicko-2 rating. default 1000</td>
-    <td>the Glicko-2 confidence. default 500</td>
+    <td>Glicko-2 rating. default 1000</td>
+    <td>Glicko-2 confidence. default 500</td>
   </tr>
 </table>
 
@@ -35,15 +35,15 @@ We also have a head2head table where we store the results of the pairings, as we
     <td>id</td><td>p1</td><td>p2</td><td>winner</td><td>player</td>
   </tr>
   <tr>
-    <td>the pairing id</td>
-    <td>the first item</td>
-    <td>the second item</td>
-    <td>the winner of the competition</td>
-    <td>the submitter's name (optional)</td>
+    <td>pairing id</td>
+    <td>first item</td>
+    <td>second item</td>
+    <td>winner of the competition</td>
+    <td>submitter's name (optional)</td>
   </tr>
 </table>
 
-That's what we have so far. To set up the comps table, just run the table_setup.sql file in the test database.
+That's what we have so far.
 
 ## Page Layout and Concept
 
@@ -61,4 +61,4 @@ Pairings are shown on this page. It will show 2 options, and the user has to pic
 This page will show the rankings of the items after the competition finishes or halfway through the competition. Doesn't need much else, other than maybe the ability to reset it.
 
 ## Dev Setup
-To work on the project, you need to install MySql, PHP, and Apache webserver. Connect PHP to Apache and make sure that PDO_MySql is enabled. In Apache, enabe RewriteEngine for the links to work correctly. In MySql, create a database named `test` with username root and password `billybob`. Once that's all set up correctly, run the table_setup.sql while logged into the database.
+To work on the project, you need to install MySql, PHP, and Apache2. Connect PHP to Apache2 and make sure that PDO_MySql is enabled. In Apache2, enabe mod_rewrite.so for the links to work correctly. In MySql, create a database named `test` with username `root` and password `billybob`. Once that's all set up correctly, run the table_setup.sql while logged into the database.
