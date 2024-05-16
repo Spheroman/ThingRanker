@@ -38,7 +38,7 @@ We also have a head2head table where we store the results of the pairings, as we
     <td>pairing id</td>
     <td>first item</td>
     <td>second item</td>
-    <td>winner of the competition</td>
+    <td>winner of the pairing</td>
     <td>submitter's name (optional)</td>
   </tr>
 </table>
