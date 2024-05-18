@@ -15,7 +15,13 @@ class item
 
     //TODO: generate sql to update the item in the database
     function update(): string
-{
-        throw new Error("update not implemented");
-}
+    {
+        $item_update ="UPDATE items
+                                SET name = '{$this->name}',
+                                    rating = '{$this->rating}',
+                                    confidence = '{$this->confidence}'
+                                WHERE id = '{$this->id}';
+                            ";
+        return $item_Update;
+    }
 }
