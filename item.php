@@ -14,6 +14,7 @@ class item
     }
 
     //TODO: generate sql to update the item in the database
+    //sql injection is still an issue
     function update(): string
     {
         $item_update ="UPDATE items
@@ -22,6 +23,6 @@ class item
                                     confidence = '{$this->confidence}'
                                 WHERE id = '{$this->id}';
                             ";
-        return $item_Update;
+        return $item_update;
     }
 }
