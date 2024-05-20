@@ -19,7 +19,10 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     if (isset($_POST['name'])){
-        $conn->exec("INSERT INTO $id (name) VALUES ('" .$_POST['name'] . "')");
+        $name = $_POST['name'];
+        $stmt = $conn->prepare("INSERT INTO $id (name) VALUES (:name)");
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->execute();
     }
     $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id;");
     $sql->execute();
@@ -31,13 +34,15 @@ try {
     $i = 0;
     foreach ($arr as $v) {
         $i++;
-        $a = $v["name"];
-        $b = $v["rating"];
-        $c = $v["confidence"];
+        $a = htmlspecialchars($v["name"], ENT_NOQUOTES, 'UTF-8');
+        $b = htmlspecialchars($v["rating"], ENT_NOQUOTES, 'UTF-8');
+        $c = htmlspecialchars($v["confidence"], ENT_NOQUOTES, 'UTF-8');
         echo "<tr><td>$i</td><td>$a</td><td>$b</td><td>$c</td></tr>\n";
     }
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    echo "Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
+} catch (Exception $e) {
+  echo "Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
 }
 $conn = null;
 
