@@ -21,23 +21,25 @@ try {
     $tmp = $comp->id . "(id)";
     //generate items table
     $sql = "
-CREATE TABLE $comp->id (
-    id int auto_increment primary key,
-    name varchar(50) not null,
-    rating smallint default 1000,
-    confidence smallint default 500
-);
-create trigger $comp->id" . "trigger
-    after insert
-    on $comp->id
-    for each row
-begin
-    update comps
-    set updated = NOW()
-    where id = '$comp->id';
-end;
-";
-    $conn->exec($sql);
+    CREATE TABLE $comp->id (
+        id int auto_increment primary key,
+        name varchar(50) not null,
+        rating smallint default 1000,
+        confidence smallint default 500
+    );
+    CREATE trigger $comp->id" . "trigger
+    AFTER insert
+    ON $comp->id
+    FOR EACH ROW
+    BEGIN
+        UPDATE comps
+        SET updated = NOW()
+        WHERE id = '$comp->id';
+    END;
+    ";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':comp_id', $comp->id);
+    $stmt->execute();
     //TODO: move match history table generation to when the competition starts
     //generate match history table
     $sql = "CREATE TABLE $comp->id" . "_h2h (
@@ -54,13 +56,20 @@ end;
     $_SESSION["comp"] = $comp;
 
     $sql = "INSERT INTO comps (id, name) VALUES ('$comp->id', '$comp->name')";
-    $conn->exec($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':comp_id', $comp->id);
+    $stmt->bindParam(':comp_name', $comp->name);
+    $stmt->execute();
 
     $sname = $_SERVER['SERVER_NAME'];
     header("Location: /setup/$comp->id");
 
 } catch (PDOException $e) {
-    echo $sql . "<br>" . $e->getMessage();
+    echo $sql . "<br> Database error: " . $e->getMessage();
+} catch (Exception $e) {
+    error_log("Error: " . $e->getMessage());
+    echo "An error has occurred: " . $e->getMessage();
 }
 
 $conn = null;
+?>
