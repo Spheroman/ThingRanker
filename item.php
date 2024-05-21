@@ -1,5 +1,6 @@
-<?php
 
+<?php
+/** @noinspection SqlResolve */
 class item
 {
     public int $id;
@@ -18,7 +19,7 @@ class item
 
     //TODO: generate sql to update the item in the database
     function update(PDO $pdo, String $id): PDOStatement
-    {
+    {/** @noinspection SqlResolve */
         $stmt = $pdo->prepare("UPDATE :tID 
                                   SET name = :name, 
                                       rating = :rating, 

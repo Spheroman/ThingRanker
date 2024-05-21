@@ -43,7 +43,6 @@ try {
 }
 $conn = null;
 
-//will just send post to itself to add things to database. makes it annoying to refresh the page.
 echo "</table>";
 echo "<form action='/add.php' method='POST'>
 thingy Name: <label>
