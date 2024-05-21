@@ -24,13 +24,10 @@ try {
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->execute();
     }
-    $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id;");
+    $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id ORDER BY rating DESC;");
     $sql->execute();
-
-    // set the resulting array to associative
-    $result = $sql->setFetchMode(PDO::FETCH_ASSOC);
+    $sql->setFetchMode(PDO::FETCH_ASSOC);
     $arr = $sql->fetchAll();
-    usort($arr, fn($a, $b) => $a['rating'] <=> $b['rating']); //this can be done with sql
     $i = 0;
     foreach ($arr as $v) {
         $i++;
@@ -40,7 +37,7 @@ try {
         echo "<tr><td>$i</td><td>$a</td><td>$b</td><td>$c</td></tr>\n";
     }
 } catch (PDOException $e) {
-    echo "Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
+    echo "SQL Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
 } catch (Exception $e) {
   echo "Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
 }
@@ -48,9 +45,11 @@ $conn = null;
 
 //will just send post to itself to add things to database. makes it annoying to refresh the page.
 echo "</table>";
-echo "<form action='' method='POST'>
+echo "<form action='/add.php' method='POST'>
 thingy Name: <label>
     <input type='text' name='name'>
 </label><br>
+<input type='hidden' name='redirect' value='setup/'>
+<input type='hidden' name='id' value=$id>
 <input type='submit'>
 </form>";
