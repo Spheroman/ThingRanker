@@ -14,15 +14,21 @@ class item
     }
 
     //TODO: generate sql to update the item in the database
-    //sql injection is still an issue
-    function update(): string
+    function update(PDO $pdo): string
     {
-        $item_update ="UPDATE items
-                                SET name = '{$this->name}',
-                                    rating = '{$this->rating}',
-                                    confidence = '{$this->confidence}'
-                                WHERE id = '{$this->id}';
-                            ";
-        return $item_update;
+        $stmt = $pdo->prepare("UPDATE items 
+                                  SET name = :name, 
+                                      rating = :rating, 
+                                      confidence = :confidence 
+                                  WHERE id = :id");
+
+        $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+        $stmt->bindParam(':rating', $this->rating, PDO::PARAM_INT);
+        $stmt->bindParam(':confidence', $this->confidence, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+
+        $queryString = $stmt->queryString;
+
+        return $queryString;
     }
 }
