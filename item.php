@@ -8,9 +8,12 @@ class item
     public int $confidence;
 
     //TODO: create constructor from PDO output
-    function __construct($in)
+    function __construct(array $in)
     {
-        throw new Error("item constructor not implemented");
+        $this->id = $in['id'] ?? 0;
+        $this->name = $in['name'] ?? '';
+        $this->rating = $in['rating'} ?? 0;
+        $this->confidence = $in['confidence'] ?? 0;
     }
 
     //TODO: generate sql to update the item in the database
