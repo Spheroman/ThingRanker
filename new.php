@@ -61,7 +61,6 @@ try {
     $stmt->bindParam(':comp_name', $comp->name);
     $stmt->execute();
 
-    $sname = $_SERVER['SERVER_NAME'];
     header("Location: /setup/$comp->id");
 
 } catch (PDOException $e) {
