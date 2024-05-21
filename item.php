@@ -12,7 +12,7 @@ class item
     {
         $this->id = $in['id'] ?? 0;
         $this->name = $in['name'] ?? '';
-        $this->rating = $in['rating'} ?? 0;
+        $this->rating = $in['rating'] ?? 0;
         $this->confidence = $in['confidence'] ?? 0;
     }
 
