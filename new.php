@@ -56,7 +56,6 @@ end;
     $sql = "INSERT INTO comps (id, name) VALUES ('$comp->id', '$comp->name')";
     $conn->exec($sql);
 
-    $sname = $_SERVER['SERVER_NAME'];
     header("Location: /setup/$comp->id");
 
 } catch (PDOException $e) {

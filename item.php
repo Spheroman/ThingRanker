@@ -14,21 +14,19 @@ class item
     }
 
     //TODO: generate sql to update the item in the database
-    function update(PDO $pdo): string
+    function update(PDO $pdo, String $id): PDOStatement
     {
-        $stmt = $pdo->prepare("UPDATE items 
+        $stmt = $pdo->prepare("UPDATE :tID 
                                   SET name = :name, 
                                       rating = :rating, 
                                       confidence = :confidence 
                                   WHERE id = :id");
-
+        $stmt->bindParam(':tID', $id, PDO::PARAM_STR);
         $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
         $stmt->bindParam(':rating', $this->rating, PDO::PARAM_INT);
         $stmt->bindParam(':confidence', $this->confidence, PDO::PARAM_INT);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
 
-        $queryString = $stmt->queryString;
-
-        return $queryString;
+        return $stmt;
     }
 }
