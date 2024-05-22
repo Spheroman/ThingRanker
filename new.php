@@ -38,7 +38,6 @@ try {
     END;
     ";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':comp_id', $comp->id);
     $stmt->execute();
     //TODO: move match history table generation to when the competition starts
     //generate match history table

@@ -20,7 +20,8 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     if (isset($_POST['name'])){
         $name = $_POST['name'];
-        $stmt = $conn->prepare("INSERT INTO $id (name) VALUES (:name)");
+        $stmt = $conn->prepare("INSERT INTO :id (name) VALUES (:name)");
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->execute();
     }
