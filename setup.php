@@ -15,19 +15,33 @@ $password = "billybob";
 $dbname = "test";
 $id = $_GET["id"];
 
+// Handle form submissions to add items
+if (isset($_POST['name'])) {
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conn->exec("INSERT INTO $id (name) VALUES ('" . $_POST['name'] . "')");
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+// Display the competition setup table
+echo "<table style='border: solid 1px black;'>";
+echo "<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Confidence</th></tr>";
+
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    if (isset($_POST['name'])){
-        $conn->exec("INSERT INTO $id (name) VALUES ('" .$_POST['name'] . "')");
-    }
+
+    // Fetch items for the competition
     $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id;");
     $sql->execute();
-
-    // set the resulting array to associative
     $result = $sql->setFetchMode(PDO::FETCH_ASSOC);
     $arr = $sql->fetchAll();
-    usort($arr, fn($a, $b) => $a['rating'] <=> $b['rating']); //this can be done with sql
+    usort($arr, fn($a, $b) => $a['rating'] <=> $b['rating']);
+
+    // Display items in the table
     $i = 0;
     foreach ($arr as $v) {
         $i++;
@@ -41,11 +55,23 @@ try {
 }
 $conn = null;
 
-//will just send post to itself to add things to database. makes it annoying to refresh the page.
+// Display form to add new items
 echo "</table>";
 echo "<form action='' method='POST'>
 thingy Name: <label>
     <input type='text' name='name'>
 </label><br>
-<input type='submit'>
+<input type='submit' value='Add Item'>
 </form>";
+
+// Additional options for the competition setup
+echo "<div>";
+echo "<h2>Competition Options</h2>";
+echo "<ul>";
+echo "<li><a href='#'>Ranking Method</a></li>";
+echo "<li><a href='#'>Pairing Method</a></li>";
+echo "<li><a href='#'>Reset Competition</a></li>";
+echo "<li><a href='#'>Delete Competition</a></li>";
+echo "</ul>";
+echo "</div>";
+?>
