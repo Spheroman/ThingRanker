@@ -47,6 +47,8 @@ That's what we have so far.
 
 ## Page Layout and Concept
 
+https://www.figma.com/design/fkUNiNu0bEyCh0Jy0L1Cwo/ThingRanker?node-id=0%3A1&t=ywimVgiXGstqoxEx-1
+
 So, there's going to probably be about 5 pages. A home page, a setup page, a competition landing page, a pairing page, and a results page.
 
 ### Home Page
