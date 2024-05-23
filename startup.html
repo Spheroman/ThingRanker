@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <title>Welcome!</title>
         <style>
-@import url('https://fonts.googleapis.com/css2?family=Fascinate&family=Fugaz+One&family=Gudea:ital,wght@0,400;0,700;1,400&family=Oxygen:wght@300;400;700&family=Ruluko&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fascinate&family=Fugaz+One&family=Gudea:ital,wght@0,400;0,700;1,400&family=Oxygen:wght@300;400;700&family=Ruluko&display=swap');
 
             .fugaz-one-regular {
                 font-family: "Fugaz One", sans-serif;
@@ -40,16 +42,19 @@
                 text-align: center;
             }
 
-            .home {
+            body {
                 background-color: #0D3718;
+                position: relative; 
+                font-weight: 400;
+            	-webkit-font-smoothing: antialiased;
             }
 
             h1 {
             font-family: Fugaz One;
             font-size: 128px;
             color: #E6E6D5;
-            padding-top: 8%;
-            padding-bottom: 0%;
+            padding-top: 0.30em;
+            padding-bottom: 0em;
             margin-bottom: 0px;
             }
 
@@ -61,13 +66,59 @@
                 color: #D4D6BF;
             }
 
+            form {
+                position: relative; display: block; height: auto; margin: auto; padding: 0.55em;
+                box-sizing: border-box; 
+                font-family: 'Source Sans Pro', sans-serif;
+
+                input[type='text'] {
+                    display: block; margin: auto; padding: 0.75em 0.75em 0.75em;
+                    background-color: #FFF; border: solid 2px #FFF; border-radius: 4px;
+                    box-sizing: border-box; 
+                    width:35%; height: 3.5em; 
+                    font-size: 1.25em; color: #353538; font-weight: 600; font-family: inherit;
+                    transition: box-shadow .2s linear, border-color .25s ease-out;
+                }
+                input[type='text']:focus {
+                    outline: none;
+                    box-shadow: 0px 2px 10px rgba(0,0,0,.2);
+                    border: solid 2px #98dcff;
+                }
+                
+                
+                .field {
+                    border: solid 1px black; border: none;
+                    margin: auto; padding: 0 0 1.5em; position: relative;
+                    .helper {
+                        position: absolute; z-index: 1;
+                        font-family: inherit;
+                    }
+                    ::placeholder{
+                        color: #b8b8c1;
+                    }
+                    .helper2 {
+                        bottom: 5.9em; right: 29.4em;
+                        font-size: .85em; color: #FFF; font-weight: 600; opacity: 0; 
+                        transition: opacity .2s linear;
+                    }
+                    &.focusWithText {
+                        .helper1 {
+                            opacity: 0;
+                        }
+                        .helper2 {
+                            opacity: .75;
+                        }
+                    }
+                }
+            }
             .button {
                 border: 2px solid #797D4A;
                 border-radius: 15px;
                 font-family: Fascinate;
                 color: #FFFFFF;
                 font-size: 56px;
-                padding: 12px 128px;
+                width: 35%; 
+                height: 1.70em;
                 background-color: #797D4A;
                 cursor: pointer;
                 transition-duration: 0.2s;
@@ -80,7 +131,11 @@
             .scroll {
                 color: #E6E6D5;
             }
-            h3, h4 {
+
+            h3 {
+                padding-top: 3em;
+            }
+            .info {
                 font-family: Gudea;
                 font-size: 48px;
                 font-weight: lighter;
@@ -96,19 +151,38 @@
         </style>
     </head>
     <body class = "home">
+        
         <h1>THING RANKER</h1>
         <p class = "tag">DECIDER FOR THE INDECISIVE</p>
 
         <form action="/new.php">
-            <label for="fname">competition name:</label>
-            <input type="text" id="fname" name="fname"><br><br>
+
+            <div class="field">
+                <input type="text" id="comp" class="text" placeholder="Competition"/>
+                <p class="helper helper2">Competition Name</p>
+            </div>
+
             <input class = "button" type="submit" value="START">
         </form>
     </body>
     <body class = "scroll">
-        <h3>HOW IT WORKS</h3>
+        <h3 class = "info">HOW IT WORKS</h3>
         <p1>yayyyyyyy filler text</p1>
-        <h4>WHY PAIRWISE</h4>
+        <h4 class = "info">WHY PAIRWISE</h4>
         <p2>yayyyyyyy moreeeee filler text</p1>
     </body>
 </html>
+<script>
+    $("#comp").each(function (type) {
+	
+	$(this).keypress(function () {
+		$(this).parent().addClass("focusWithText");
+	});
+ 
+	$(this).blur(function () {
+		if ($(this).val() == "") {
+			$(this).parent().removeClass("focusWithText");
+		}
+	});	
+});
+</script>
