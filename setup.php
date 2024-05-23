@@ -15,27 +15,11 @@ $password = "billybob";
 $dbname = "test";
 $id = $_GET["id"];
 
-// Handle form submissions to add items
-if (isset($_POST['name'])) {
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $conn->exec("INSERT INTO $id (name) VALUES ('" . $_POST['name'] . "')");
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
-}
-
-// Display the competition setup table
-echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Confidence</th></tr>";
-
+//below is all we need to copy for the new tablefunction php file
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Fetch items for the competition
-    $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id;");
+    $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id ORDER BY rating DESC;");
     $sql->execute();
     $result = $sql->setFetchMode(PDO::FETCH_ASSOC);
     $arr = $sql->fetchAll();
