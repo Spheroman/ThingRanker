@@ -15,15 +15,10 @@ $password = "billybob";
 $dbname = "test";
 $id = $_GET["id"];
 
+//below is all we need to copy for the new tablefunction php file
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    if (isset($_POST['name'])){
-        $name = $_POST['name'];
-        $stmt = $conn->prepare("INSERT INTO $id (name) VALUES (:name)");
-        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->execute();
-    }
     $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id ORDER BY rating DESC;");
     $sql->execute();
     $sql->setFetchMode(PDO::FETCH_ASSOC);
@@ -43,7 +38,6 @@ try {
 }
 $conn = null;
 
-//will just send post to itself to add things to database. makes it annoying to refresh the page.
 echo "</table>";
 echo "<form action='/add.php' method='POST'>
 thingy Name: <label>
