@@ -16,6 +16,8 @@ class pairing
         $this->id = $id;
         $this->p1 = new item([], $this->id);
         $this->p2 = new item([], $this->id);
+        $this->player = "";
+        $this->winner = 0;
     }
 
     /**
@@ -45,8 +47,28 @@ class pairing
     }
 
     //TODO: generate sql to add the pairing to completed rounds
-    function sql($id, $i1, $i2): string
+    function sql(PDO $pdo, string $id, item $i1, item $i2): string
     {
-        throw new Error("sql not implemented");
+        $insertSql = "INSERT INTO completed_rounds (tournament_id, item1_id, item2_id, player, winner) 
+                      VALUES (:tournament_id, :item1_id, :item2_id, :player, :winner);";
+        $insertParams = [
+            ':tournament_id' => $id,
+            ':item1_id' => $i1->id,
+            ':item2_id' => $i2->id,
+            ':player' => $this->player,
+            ':winner' => $this->winner
+        ];
+
+        $updateSql1 = $i1->getUpdateSql();
+        $updateSql2 = $i2->getUpdateSql();
+
+        $combinedSql = $insertSql . " " . $updateSql1['sql'] . " " . $updateSql2['sql'];
+
+        $combinedParams = array_merge($insertParams, $updateSql1['params'], $updateSql2['params']);
+
+        $stmt = $pdo->prepare($combinedSql);
+        $stmt->execute($combinedParams);
+
+        return $combinedSql;
     }
 }
