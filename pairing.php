@@ -52,13 +52,15 @@ class pairing
         $tableName = $this->id . "_h2h";
     
         $insertSql = "INSERT INTO $tableName (tournament_id, item1_id, item2_id, player, winner) 
-                      VALUES (:tournament_id, :item1_id, :item2_id, :player, :winner);";
+                      VALUES (:tournament_id, :item1_id, :item2_id, :player, :winner, :pairing_id, :iscomplete);";
         $insertParams = [
             ':tournament_id' => $this->id,
             ':item1_id' => $this->p1->id,
             ':item2_id' => $this->p2->id,
             ':player' => $this->player,
-            ':winner' => $this->winner ? 1 : 0
+            ':winner' => $this->winner ? 1 : 0,
+            ':pairing_id' => $this->pairing_id,
+            ':iscomplete' => $this->iscomplete
         ];
     
         $stmt = $pdo->prepare($insertSql);
