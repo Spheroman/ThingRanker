@@ -47,7 +47,6 @@ try {
         p2 int NOT NULL,
         winner BOOLEAN,
         player VARCHAR(20), 
-        pairing_id INT NOT NULL,
         iscomplete BOOLEAN NOT NULL DEFAULT FALSE,
         FOREIGN KEY(p1) REFERENCES $tmp,
         FOREIGN KEY(p2) REFERENCES $tmp,
