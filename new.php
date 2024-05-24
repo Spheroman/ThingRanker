@@ -45,7 +45,7 @@ try {
         id int AUTO_INCREMENT PRIMARY KEY,
         p1 int NOT NULL,
         p2 int NOT NULL,
-        winner int,
+        winner BOOLEAN,
         player VARCHAR(20), 
         pairing_id INT NOT NULL,
         iscomplete BOOLEAN NOT NULL DEFAULT FALSE,
