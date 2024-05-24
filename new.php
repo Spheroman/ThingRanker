@@ -45,8 +45,9 @@ try {
         id int AUTO_INCREMENT PRIMARY KEY,
         p1 int NOT NULL,
         p2 int NOT NULL,
-        winner int,
+        winner BOOLEAN,
         player VARCHAR(20), 
+        iscomplete BOOLEAN NOT NULL DEFAULT FALSE,
         FOREIGN KEY(p1) REFERENCES $tmp,
         FOREIGN KEY(p2) REFERENCES $tmp,
         FOREIGN KEY(winner) REFERENCES $tmp

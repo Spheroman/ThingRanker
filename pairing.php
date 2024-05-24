@@ -9,6 +9,8 @@ class pairing
     public item $p2; //item 2
     public string $player; //the player name
     public bool $winner; //did p1 win
+    public int $pairing_id; // ID of the pairing
+    public bool $iscomplete; // Indicates if the pairing is complete
 
     //TODO: get a pairing from 1 of 3 options: random, rating based, and reliability.
     function __construct(string $id, int $method)
@@ -16,6 +18,8 @@ class pairing
         $this->id = $id;
         $this->p1 = new item([], $this->id);
         $this->p2 = new item([], $this->id);
+        $this->player = "";
+        $this->winner = 0;
     }
 
     /**
@@ -45,8 +49,23 @@ class pairing
     }
 
     //TODO: generate sql to add the pairing to completed rounds
-    function sql($id, $i1, $i2): string
+    function sql(PDO $pdo): void
     {
-        throw new Error("sql not implemented");
+        $tableName = $this->id . "_h2h";
+    
+        $insertSql = "INSERT INTO $tableName (tournament_id, item1_id, item2_id, player, winner) 
+                      VALUES (:tournament_id, :item1_id, :item2_id, :player, :winner, :pairing_id, :iscomplete);";
+        $insertParams = [
+            ':tournament_id' => $this->id,
+            ':item1_id' => $this->p1->id,
+            ':item2_id' => $this->p2->id,
+            ':player' => $this->player,
+            ':winner' => $this->winner ? 1 : 0,
+            ':pairing_id' => $this->pairing_id,
+            ':iscomplete' => $this->iscomplete
+        ];
+    
+        $stmt = $pdo->prepare($insertSql);
+        $stmt->execute($insertParams);
     }
 }
