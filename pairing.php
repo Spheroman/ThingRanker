@@ -47,28 +47,21 @@ class pairing
     }
 
     //TODO: generate sql to add the pairing to completed rounds
-    function sql(PDO $pdo, string $id, item $i1, item $i2): string
+    function sql(PDO $pdo): void
     {
-        $insertSql = "INSERT INTO completed_rounds (tournament_id, item1_id, item2_id, player, winner) 
+        $tableName = $this->id . "_h2h";
+    
+        $insertSql = "INSERT INTO $tableName (tournament_id, item1_id, item2_id, player, winner) 
                       VALUES (:tournament_id, :item1_id, :item2_id, :player, :winner);";
         $insertParams = [
-            ':tournament_id' => $id,
-            ':item1_id' => $i1->id,
-            ':item2_id' => $i2->id,
+            ':tournament_id' => $this->id,
+            ':item1_id' => $this->p1->id,
+            ':item2_id' => $this->p2->id,
             ':player' => $this->player,
-            ':winner' => $this->winner
+            ':winner' => $this->winner ? 1 : 0
         ];
-
-        $updateSql1 = $i1->getUpdateSql();
-        $updateSql2 = $i2->getUpdateSql();
-
-        $combinedSql = $insertSql . " " . $updateSql1['sql'] . " " . $updateSql2['sql'];
-
-        $combinedParams = array_merge($insertParams, $updateSql1['params'], $updateSql2['params']);
-
-        $stmt = $pdo->prepare($combinedSql);
-        $stmt->execute($combinedParams);
-
-        return $combinedSql;
+    
+        $stmt = $pdo->prepare($insertSql);
+        $stmt->execute($insertParams);
     }
 }
