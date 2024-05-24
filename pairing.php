@@ -9,6 +9,8 @@ class pairing
     public item $p2; //item 2
     public string $player; //the player name
     public bool $winner; //did p1 win
+    public int $pairing_id; // ID of the pairing
+    public bool $iscomplete; // Indicates if the pairing is complete
 
     //TODO: get a pairing from 1 of 3 options: random, rating based, and reliability.
     function __construct(string $id, int $method)
