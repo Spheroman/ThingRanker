@@ -13,13 +13,30 @@ class pairing
     public bool $iscomplete; // Indicates if the pairing is complete
 
     //TODO: get a pairing from 1 of 3 options: random, rating based, and reliability.
-    function __construct(string $id, int $method)
+    function __construct(string $id, item $p1, item $p2, string $player, bool $winner)
     {
         $this->id = $id;
-        $this->p1 = new item([], $this->id);
-        $this->p2 = new item([], $this->id);
-        $this->player = "";
-        $this->winner = 0;
+        $this->p1 = $p1;
+        $this->p2 = $p2;
+        $this->player = $player;
+        $this->winner = $winner;
+    }
+
+    static function fromArray(array $in): pairing
+    {
+        return new Pairing($in["id"], $in["p1"], $in["p2"], $in["player"], $in['winner']);
+    }
+
+    static function fromSQL(string $tID, int $id, PDO $pdo): pairing
+    {
+        $conn = $pdo->prepare("SELECT p1, p2, winner, player, iscomplete FROM :table_h2h WHERE id=:id");
+        $tID = $tID."_h2h";
+        $conn->bindParam(":table", $tID, PDO::PARAM_STR);
+        $conn->bindParam(":id", $id, PDO::PARAM_INT);
+        $conn->execute();
+        $conn->setFetchMode(PDO::FETCH_ASSOC);
+        $arr = $conn->fetchAll();
+        return Pairing::fromArray($arr);
     }
 
     /**
@@ -52,7 +69,7 @@ class pairing
     function sql(PDO $pdo): void
     {
         $tableName = $this->id . "_h2h";
-    
+
         $insertSql = "INSERT INTO $tableName (tournament_id, item1_id, item2_id, player, winner) 
                       VALUES (:tournament_id, :item1_id, :item2_id, :player, :winner, :pairing_id, :iscomplete);";
         $insertParams = [
@@ -64,7 +81,7 @@ class pairing
             ':pairing_id' => $this->pairing_id,
             ':iscomplete' => $this->iscomplete
         ];
-    
+
         $stmt = $pdo->prepare($insertSql);
         $stmt->execute($insertParams);
     }
