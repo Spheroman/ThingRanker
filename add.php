@@ -1,5 +1,10 @@
 <?php
 
+$servername = "localhost";
+$username = "root";
+$password = "billybob";
+$dbname = "test";
+
 //TODO: add $_POST["name"] to item table, and update the date in the comps table
 //TODO: sql injection protection
 
@@ -12,11 +17,12 @@ $name = $_POST['name'];
 $id = $_POST['id'];
 
 try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $stmt = $pdo->prepare("INSERT INTO $id (name) VALUES (:name)");
     $stmt->bindParam(':name', $name);
     $stmt->execute();
 
-    header("Location: /setup/".$_POST["id"]);
+    header("Location: /".$_POST["redirect"].$_POST["id"]);
     exit();
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();

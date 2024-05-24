@@ -15,37 +15,35 @@ $password = "billybob";
 $dbname = "test";
 $id = $_GET["id"];
 
+//below is all we need to copy for the new tablefunction php file
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    if (isset($_POST['name'])){
-        $conn->exec("INSERT INTO $id (name) VALUES ('" .$_POST['name'] . "')");
-    }
-    $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id;");
+    $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id ORDER BY rating DESC;");
     $sql->execute();
-
-    // set the resulting array to associative
-    $result = $sql->setFetchMode(PDO::FETCH_ASSOC);
+    $sql->setFetchMode(PDO::FETCH_ASSOC);
     $arr = $sql->fetchAll();
-    usort($arr, fn($a, $b) => $a['rating'] <=> $b['rating']); //this can be done with sql
     $i = 0;
     foreach ($arr as $v) {
         $i++;
-        $a = $v["name"];
-        $b = $v["rating"];
-        $c = $v["confidence"];
+        $a = htmlspecialchars($v["name"], ENT_NOQUOTES, 'UTF-8');
+        $b = htmlspecialchars($v["rating"], ENT_NOQUOTES, 'UTF-8');
+        $c = htmlspecialchars($v["confidence"], ENT_NOQUOTES, 'UTF-8');
         echo "<tr><td>$i</td><td>$a</td><td>$b</td><td>$c</td></tr>\n";
     }
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    echo "SQL Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
+} catch (Exception $e) {
+  echo "Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
 }
 $conn = null;
 
-//will just send post to itself to add things to database. makes it annoying to refresh the page.
 echo "</table>";
-echo "<form action='' method='POST'>
+echo "<form action='/add.php' method='POST'>
 thingy Name: <label>
     <input type='text' name='name'>
 </label><br>
+<input type='hidden' name='redirect' value='setup/'>
+<input type='hidden' name='id' value=$id>
 <input type='submit'>
 </form>";
