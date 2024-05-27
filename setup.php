@@ -1,13 +1,12 @@
 <?php
 // page.com/setup/[id]
 require "comp.php";
+require "tablechecker.php";
 /*TODO: proper HTML and CSS,
   TODO: add other options such as ranking method and pairing method
   TODO: add a pin to lock the setup page
   TODO: add options to add items, delete items, reset the competition, to delete the competition, and to reset the deletion timer (just update in database)
 */
-echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Confidence</th></tr>";
 
 $servername = "localhost";
 $username = "root";
@@ -15,10 +14,19 @@ $password = "billybob";
 $dbname = "test";
 $id = $_GET["id"];
 
+$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+if(!tableCheck($id, $conn)) {
+    echo "comp not found";
+    return "error";
+}
+
+echo "<table style='border: solid 1px black;'>";
+echo "<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Confidence</th></tr>";
+
 //below is all we need to copy for the new tablefunction php file
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id ORDER BY rating DESC;");
     $sql->execute();
     $sql->setFetchMode(PDO::FETCH_ASSOC);
