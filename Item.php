@@ -3,15 +3,16 @@
 
 class Item
 {
-    public string $tID;
+    public string $tID = "";
 
     public int $id;
     public string $name;
     public int $rating;
-    public int $variance;
+    public int $confidence;
 
     //TODO: create constructor from PDO output
-    function __construct(array $in, $tID)
+    /*
+    function __construct(, $tID)
     {
         $this->tID = $tID;
         $this->id = $in['id'] ?? 0;
@@ -19,20 +20,21 @@ class Item
         $this->rating = $in['rating'] ?? 0;
         $this->variance = $in['confidence'] ?? 0;
     }
-
+*/
     /**
      * @throws Exception
      */
     static function fromSQL($tID, $id, $pdo): Item
     {
         if(!tableCheck($tID, $pdo))
-            throw new Exception("id not found");
+            throw new Exception("tid not found");
         $conn = $pdo->prepare("SELECT id, name, rating, confidence FROM $tID WHERE id=:id");
         $conn->bindParam(":id", $id, PDO::PARAM_INT);
         $conn->execute();
         $conn->setFetchMode(PDO::FETCH_ASSOC);
-        $arr = $conn->fetchAll();
-        return new Item($arr, $tID);
+        $ret = $conn->fetchObject('Item');
+        $ret->tID = $tID;
+        return $ret;
     }
 
 
@@ -47,7 +49,7 @@ class Item
         $arr = $stmt->fetchAll();
         $this->name = htmlspecialchars($arr['name']);
         $this->rating = $arr['rating'];
-        $this->variance = $arr['confidence'];
+        $this->confidence = $arr['confidence'];
         } catch (PDOException $e) {
         echo "SQL Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
         }
@@ -65,7 +67,7 @@ class Item
         $stmt->bindParam(':tID', $this->id, PDO::PARAM_STR);
         $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
         $stmt->bindParam(':rating', $this->rating, PDO::PARAM_INT);
-        $stmt->bindParam(':confidence', $this->variance, PDO::PARAM_INT);
+        $stmt->bindParam(':confidence', $this->confidence, PDO::PARAM_INT);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
         $stmt->execute();
         } catch (PDOException $e) {
