@@ -1,7 +1,7 @@
 
 <?php
 
-class item
+class Item
 {
     public string $tID;
 
@@ -18,6 +18,21 @@ class item
         $this->name = $in['name'] ?? '';
         $this->rating = $in['rating'] ?? 0;
         $this->variance = $in['confidence'] ?? 0;
+    }
+
+    /**
+     * @throws Exception
+     */
+    static function fromSQL($tID, $id, $pdo): Item
+    {
+        if(!tableCheck($tID, $pdo))
+            throw new Exception("id not found");
+        $conn = $pdo->prepare("SELECT id, name, rating, confidence FROM $tID WHERE id=:id");
+        $conn->bindParam(":id", $id, PDO::PARAM_INT);
+        $conn->execute();
+        $conn->setFetchMode(PDO::FETCH_ASSOC);
+        $arr = $conn->fetchAll();
+        return new Item($arr, $tID);
     }
 
 

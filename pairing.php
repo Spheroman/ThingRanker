@@ -1,19 +1,20 @@
 <?php
 require "bayelo.php";
+require "tablechecker.php";
 
 //TODO: Implement Glicko-2 algorithm and html generation functions
 class pairing
 {
     public string $id;
-    public item $p1; //item 1
-    public item $p2; //item 2
+    public Item $p1; //item 1
+    public Item $p2; //item 2
     public string $player; //the player name
     public bool $winner; //did p1 win
     public int $tID; // ID of the tournament
     public bool $iscomplete; // Indicates if the pairing is complete
 
     //TODO: get a pairing from 1 of 3 options: random, rating based, and reliability.
-    function __construct(string $id, item $p1, item $p2, string $player, bool $winner, int $tID, bool $iscomplete)
+    private function __construct(string $id, Item $p1, Item $p2, string $player, bool $winner, int $tID, bool $iscomplete)
     {
         $this->id = $id;
         $this->p1 = $p1;
@@ -24,32 +25,44 @@ class pairing
         $this->iscomplete = $iscomplete;
     }
 
-    static function fromArray(array $in): pairing
+    private static function fromArray(array $in): pairing
     {
         return new Pairing($in["id"], $in["p1"], $in["p2"], $in["player"], $in["winner"], $in["tID"], $in["iscomplete"]);
     }
 
+    /**
+     * @throws Exception
+     */
     static function fromSQL(string $tID, int $id, PDO $pdo): pairing
     {
-        $conn = $pdo->prepare("SELECT p1, p2, winner, player, iscomplete FROM :table_h2h WHERE id=:id");
+        if(!tableCheck($tID, $pdo))
+            throw new Exception("id not found");
         $tID = $tID . "_h2h";
+        $conn = $pdo->prepare("SELECT p1, p2, winner, player, iscomplete FROM $tID WHERE id=:id");
         $conn->bindParam(":table", $tID, PDO::PARAM_STR);
         $conn->bindParam(":id", $id, PDO::PARAM_INT);
         $conn->execute();
         $conn->setFetchMode(PDO::FETCH_ASSOC);
         $arr = $conn->fetchAll();
+        $arr["p1"] = Item::fromSQL($tID,$arr["p1"], $pdo);
+        $arr["p2"] = Item::fromSQL($tID,$arr["p2"], $pdo);
         $arr["tID"] = $tID;
         return Pairing::fromArray($arr);
     }
 
+    /**
+     * @throws Exception
+     */
     static function fromRandom(string $tID, PDO $pdo): pairing
     {
+        if(!tableCheck($tID, $pdo))
+            throw new Exception("id not found");
         $conn = $pdo->prepare("SELECT * FROM :table ORDER BY RAND() LIMIT 2");
         $conn->bindParam(":table", $tID, PDO::PARAM_STR);
         $conn->execute();
         $conn->setFetchMode(PDO::FETCH_ASSOC);
-        $out["p1"] = new item($conn->fetchObject(), $tID);
-        $out["p2"] = new item($conn->fetchObject(), $tID);
+        $out["p1"] = new Item($conn->fetchObject(), $tID);
+        $out["p2"] = new Item($conn->fetchObject(), $tID);
         $out["id"] = -1;
         $out["player"] = "";
         $out["winner"] = "";
