@@ -52,10 +52,12 @@ try {
         FOREIGN KEY(p2) REFERENCES $tmp,
         FOREIGN KEY(winner) REFERENCES $tmp
     );";
-    $conn->exec($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
     $_SESSION["comp"] = $comp;
 
-    $sql = "INSERT INTO comps (id, name) VALUES ('$comp->id', '$comp->name')";
+    $sql = "INSERT INTO comps (id, name) VALUES (:comp_id, :comp_name)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':comp_id', $comp->id);
     $stmt->bindParam(':comp_name', $comp->name);

@@ -1,42 +1,63 @@
 <?php
-require "item.php";
+require "bayelo.php";
 
 //TODO: Implement Glicko-2 algorithm and html generation functions
 class pairing
 {
-    public string $id; //tournament id
+    public string $id;
     public item $p1; //item 1
     public item $p2; //item 2
     public string $player; //the player name
     public bool $winner; //did p1 win
-    public int $pairing_id; // ID of the pairing
+    public int $tID; // ID of the tournament
     public bool $iscomplete; // Indicates if the pairing is complete
 
     //TODO: get a pairing from 1 of 3 options: random, rating based, and reliability.
-    function __construct(string $id, item $p1, item $p2, string $player, bool $winner)
+    function __construct(string $id, item $p1, item $p2, string $player, bool $winner, int $tID, bool $iscomplete)
     {
         $this->id = $id;
         $this->p1 = $p1;
         $this->p2 = $p2;
         $this->player = $player;
         $this->winner = $winner;
+        $this->tID = $tID;
+        $this->iscomplete = $iscomplete;
     }
 
     static function fromArray(array $in): pairing
     {
-        return new Pairing($in["id"], $in["p1"], $in["p2"], $in["player"], $in['winner']);
+        return new Pairing($in["id"], $in["p1"], $in["p2"], $in["player"], $in["winner"], $in["tID"], $in["iscomplete"]);
     }
 
     static function fromSQL(string $tID, int $id, PDO $pdo): pairing
     {
         $conn = $pdo->prepare("SELECT p1, p2, winner, player, iscomplete FROM :table_h2h WHERE id=:id");
-        $tID = $tID."_h2h";
+        $tID = $tID . "_h2h";
         $conn->bindParam(":table", $tID, PDO::PARAM_STR);
         $conn->bindParam(":id", $id, PDO::PARAM_INT);
         $conn->execute();
         $conn->setFetchMode(PDO::FETCH_ASSOC);
         $arr = $conn->fetchAll();
+        $arr["tID"] = $tID;
         return Pairing::fromArray($arr);
+    }
+
+    static function fromRandom(string $tID, PDO $pdo): pairing
+    {
+        $conn = $pdo->prepare("SELECT * FROM :table ORDER BY RAND() LIMIT 2");
+        $conn->bindParam(":table", $tID, PDO::PARAM_STR);
+        $conn->execute();
+        $conn->setFetchMode(PDO::FETCH_ASSOC);
+        $out["p1"] = new item($conn->fetchObject(), $tID);
+        $out["p2"] = new item($conn->fetchObject(), $tID);
+        $out["id"] = -1;
+        $out["player"] = "";
+        $out["winner"] = "";
+        $out["tID"] = $tID;
+        $out["iscomplete"] = false;
+        $ret = Pairing::fromArray($out);
+        $ret->insert($pdo);
+        return $ret;
     }
 
     /**
@@ -44,11 +65,11 @@ class pairing
      */
     function setWinner(string $in): self
     {
-        if($this->p1->id==$in){
+        if ($this->p1->id == $in) {
             $this->winner = 1;
             return $this;
         }
-        if($this->p2->id==$in){
+        if ($this->p2->id == $in) {
             $this->winner = 0;
             return $this;
         }
@@ -65,24 +86,40 @@ class pairing
         return $this;
     }
 
-    //TODO: generate sql to add the pairing to completed rounds
-    function sql(PDO $pdo): void
+    function insert(PDO $pdo): void
     {
-        $tableName = $this->id . "_h2h";
-
-        $insertSql = "INSERT INTO $tableName (tournament_id, item1_id, item2_id, player, winner) 
-                      VALUES (:tournament_id, :item1_id, :item2_id, :player, :winner, :pairing_id, :iscomplete);";
-        $insertParams = [
-            ':tournament_id' => $this->id,
-            ':item1_id' => $this->p1->id,
-            ':item2_id' => $this->p2->id,
-            ':player' => $this->player,
-            ':winner' => $this->winner ? 1 : 0,
-            ':pairing_id' => $this->pairing_id,
-            ':iscomplete' => $this->iscomplete
-        ];
-
+        $tableName = $this->tID . "_h2h";
+        $insertSql = "INSERT INTO :table (p1, p2, player, winner) 
+VALUES (:item1_id, :item2_id, :player, :winner);
+SELECT id FROM :table WHERE id = @@Identity;
+   ";
         $stmt = $pdo->prepare($insertSql);
-        $stmt->execute($insertParams);
+        $stmt->bindParam(':table', $tableName, PDO::PARAM_STR);
+        $stmt->bindParam(':item1_id', $this->p1->id, PDO::PARAM_INT);
+        $stmt->bindParam(':item2_id', $this->p2->id, PDO::PARAM_INT);
+        $stmt->bindParam(':player', $this->player, PDO::PARAM_STR);
+        $stmt->bindParam(':winner', $this->winner, PDO::PARAM_BOOL);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $this->id = $stmt->fetchObject()["id"];
+
+    }
+
+    function update(PDO $pdo): void
+    {
+        $tableName = $this->tID . "_h2h";
+        $insertSql = "UPDATE :table
+SET (p1 = :item1_id, p2 = :item2_id, player = :player, winner = :winner, iscomplete = :iscomplete) 
+WHERE id=:pid
+";
+        $stmt = $pdo->prepare($insertSql);
+        $stmt->bindParam(':table', $tableName, PDO::PARAM_STR);
+        $stmt->bindParam(':item1_id', $this->p1->id, PDO::PARAM_INT);
+        $stmt->bindParam(':item2_id', $this->p2->id, PDO::PARAM_INT);
+        $stmt->bindParam(':player', $this->player, PDO::PARAM_STR);
+        $stmt->bindParam(':winner', $this->winner, PDO::PARAM_BOOL);
+        $stmt->bindParam(':iscomplete', $this->iscomplete, PDO::PARAM_BOOL);
+        $stmt->bindParam(':pid', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }

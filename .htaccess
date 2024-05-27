@@ -1,2 +1,4 @@
+Options -MultiViews
 RewriteEngine On
-RewriteRule ^setup/(.+)$ setup.php?id=$1 [L]
+RewriteRule ^setup/(.+)$ setup.php?id=$1 [QSA,L]
+RewriteRule ^pairing/(.+)$ pairingpage.php?id=$1 [QSA,L]
