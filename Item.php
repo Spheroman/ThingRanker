@@ -4,23 +4,10 @@
 class Item
 {
     public string $tID = "";
-
     public int $id;
     public string $name;
     public int $rating;
     public int $confidence;
-
-    //TODO: create constructor from PDO output
-    /*
-    function __construct(, $tID)
-    {
-        $this->tID = $tID;
-        $this->id = $in['id'] ?? 0;
-        $this->name = $in['name'] ?? '';
-        $this->rating = $in['rating'] ?? 0;
-        $this->variance = $in['confidence'] ?? 0;
-    }
-*/
 
     function __toString()
     {
@@ -39,6 +26,7 @@ class Item
         $conn->execute();
         $conn->setFetchMode(PDO::FETCH_ASSOC);
         $ret = $conn->fetchObject('Item');
+        $ret->name = htmlspecialchars($ret->name);
         $ret->tID = $tID;
         return $ret;
     }
@@ -52,7 +40,6 @@ class Item
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $arr = $stmt->fetch();
-        $this->name = htmlspecialchars($arr['name']);
         $this->rating = $arr['rating'];
         $this->confidence = $arr['confidence'];
         } catch (PDOException $e) {
@@ -65,11 +52,9 @@ class Item
     {
         try{/** @noinspection SqlResolve */
         $stmt = $pdo->prepare("UPDATE $this->tID
-                                  SET name = :name, 
-                                      rating = :rating, 
+                                  SET rating = :rating, 
                                       confidence = :confidence 
                                   WHERE id = :id");
-        $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
         $stmt->bindParam(':rating', $this->rating, PDO::PARAM_INT);
         $stmt->bindParam(':confidence', $this->confidence, PDO::PARAM_INT);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);

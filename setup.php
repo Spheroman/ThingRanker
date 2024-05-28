@@ -34,7 +34,7 @@ try {
     $i = 0;
     foreach ($arr as $v) {
         $i++;
-        $a = htmlspecialchars($v["name"], ENT_NOQUOTES, 'UTF-8');
+        $a = htmlspecialchars($v["name"],ENT_NOQUOTES, 'UTF-8');
         $b = htmlspecialchars($v["rating"], ENT_NOQUOTES, 'UTF-8');
         $c = htmlspecialchars($v["confidence"], ENT_NOQUOTES, 'UTF-8');
         echo "<tr><td>$i</td><td>$a</td><td>$b</td><td>$c</td></tr>\n";

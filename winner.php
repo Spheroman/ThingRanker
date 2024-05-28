@@ -9,15 +9,19 @@ $password = "billybob";
 $dbname = "test";
 
 
-if (!isset($_POST['winner']) || !isset($_POST['id']) || !isset($_SESSION['pairing'])) {
-    die("Missing 'name' or 'id' parameters, or pairing has not been issued yet.");
+if (!isset($_POST['winner']) || !isset($_POST['id'])) {
+    die("Missing 'name' or 'id' parameters.");
 }
+
+
 
 
 
 //Initialize name and id
 $winner = $_POST['winner'];
 $id = $_POST['id'];
+
+if(!isset($_SESSION['pairing'.$id])) die("missing pairing");
 
 $pairing = unserialize($_SESSION["pairing".$id]);
 $pairing->setWinner($winner);

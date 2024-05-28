@@ -62,8 +62,10 @@ class pairing
 
         $out["p1"] = $conn->fetchObject('Item');
         $out["p1"]->tID = $tID;
+        $out["p1"]->name = htmlspecialchars($out["p1"]->name);
         $out["p2"] = $conn->fetchObject('Item');
         $out["p2"]->tID = $tID;
+        $out["p2"]->name = htmlspecialchars($out["p2"]->name);
         $out["id"] = -1;
         $out["player"] = "";
         $out["winner"] = "";

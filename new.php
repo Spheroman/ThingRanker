@@ -17,7 +17,8 @@ try {
 
     //TODO: change logic to only overwrite expired tables (comp last modified 1 yr ago)
     $sql = "DROP TABLE IF EXISTS $comp->id;";
-    $conn->exec($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
     $tmp = $comp->id . "(id)";
     //generate items table
     $sql = "
@@ -49,8 +50,7 @@ try {
         player VARCHAR(20), 
         iscomplete BOOLEAN NOT NULL DEFAULT FALSE,
         FOREIGN KEY(p1) REFERENCES $tmp,
-        FOREIGN KEY(p2) REFERENCES $tmp,
-        FOREIGN KEY(winner) REFERENCES $tmp
+        FOREIGN KEY(p2) REFERENCES $tmp
     );";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
