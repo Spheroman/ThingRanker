@@ -15,41 +15,47 @@ $password = "billybob";
 $dbname = "test";
 $id = $_GET["id"];
 
+//below is all we need to copy for the new tablefunction php file
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    if (isset($_POST['name'])){
-        $name = $_POST['name'];
-        $stmt = $conn->prepare("INSERT INTO $id (name) VALUES (:name)");
-        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->execute();
-    }
     $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id ORDER BY rating DESC;");
     $sql->execute();
-    $sql->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $sql->setFetchMode(PDO::FETCH_ASSOC);
     $arr = $sql->fetchAll();
+    usort($arr, fn($a, $b) => $a['rating'] <=> $b['rating']);
+
+    // Display items in the table
     $i = 0;
     foreach ($arr as $v) {
         $i++;
-        $a = htmlspecialchars($v["name"], ENT_NOQUOTES, 'UTF-8');
-        $b = htmlspecialchars($v["rating"], ENT_NOQUOTES, 'UTF-8');
-        $c = htmlspecialchars($v["confidence"], ENT_NOQUOTES, 'UTF-8');
+        $a = $v["name"];
+        $b = $v["rating"];
+        $c = $v["confidence"];
         echo "<tr><td>$i</td><td>$a</td><td>$b</td><td>$c</td></tr>\n";
     }
 } catch (PDOException $e) {
-    echo "SQL Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
-} catch (Exception $e) {
-  echo "Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
+    echo "Error: " . $e->getMessage();
 }
 $conn = null;
 
-//will just send post to itself to add things to database. makes it annoying to refresh the page.
+// Display form to add new items
 echo "</table>";
-echo "<form action='/add.php' method='POST'>
+echo "<form action='' method='POST'>
 thingy Name: <label>
     <input type='text' name='name'>
 </label><br>
-<input type='hidden' name='redirect' value='setup/'>
-<input type='hidden' name='id' value=$id>
-<input type='submit'>
+<input type='submit' value='Add Item'>
 </form>";
+
+// Additional options for the competition setup
+echo "<div>";
+echo "<h2>Competition Options</h2>";
+echo "<ul>";
+echo "<li><a href='#'>Ranking Method</a></li>";
+echo "<li><a href='#'>Pairing Method</a></li>";
+echo "<li><a href='#'>Reset Competition</a></li>";
+echo "<li><a href='#'>Delete Competition</a></li>";
+echo "</ul>";
+echo "</div>";
+?>
