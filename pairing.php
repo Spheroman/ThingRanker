@@ -97,6 +97,7 @@ class pairing
         update_ratings($this->p1, $this->p2, $this->winner);
         $this->p1->store($pdo);
         $this->p2->store($pdo);
+        $this->iscomplete = true;
         return $this;
     }
 
@@ -120,7 +121,7 @@ VALUES (:item1_id,  :item2_id, :player, :winner);
     {
         $tableName = $this->tID . "_h2h";
         $insertSql = "UPDATE $tableName
-SET (p1 = :item1_id, p2 = :item2_id, player = :player, winner = :winner, iscomplete = :iscomplete) 
+SET p1 = :item1_id, p2 = :item2_id, player = :player, winner = :winner, iscomplete = :iscomplete
 WHERE id=:pid
 ";
         $stmt = $pdo->prepare($insertSql);

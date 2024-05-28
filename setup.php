@@ -49,7 +49,7 @@ $conn = null;
 echo "</table>";
 echo "<form action='/add.php' method='POST'>
 thingy Name: <label>
-    <input type='text' name='name'>
+    <input type='text' name='name' autofocus='autofocus'>
 </label><br>
 <input type='hidden' name='redirect' value='setup/'>
 <input type='hidden' name='id' value=$id>
