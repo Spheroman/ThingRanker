@@ -1,6 +1,8 @@
 <?php
-//TODO: improve ID generation function
-//https://stackoverflow.com/a/16738409
+require_once "table.php"; // Include table.php to access the generateCompetitionTable function
+
+// TODO: improve ID generation function
+// https://stackoverflow.com/a/16738409
 function generateRandomString($length = 10): string
 {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -12,8 +14,8 @@ function generateRandomString($length = 10): string
     return $randomString;
 }
 
-//TODO: figure out pin hashing in SQL
-//TODO: add vars for options and update comps table with columns for the vars
+// TODO: figure out pin hashing in SQL
+// TODO: add vars for options and update comps table with columns for the vars
 class comp
 {
     public string $name;
@@ -30,32 +32,43 @@ class comp
         $this->pairingOption = $pairingOption;
     }
 
-    // Function to generate a competition table
-    public function generateCompetitionTable($conn)
+    // Function to fetch competition data
+    public function fetchCompetitionData($conn)
     {
         try {
-            // Fetch competition data from the database
             $stmt = $conn->prepare("SELECT id, name, rating, confidence FROM {$this->id} ORDER BY rating DESC");
             $stmt->execute();
-            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // Generate the HTML table
-            echo "<table>";
-            echo "<tr><th>#</th><th>Name</th><th>Rating</th><th>Confidence</th></tr>";
-            foreach ($items as $index => $item) {
-                echo "<tr>";
-                echo "<td>" . ($index + 1) . "</td>";
-                echo "<td>" . htmlspecialchars($item['name']) . "</td>";
-                echo "<td>" . $item['rating'] . "</td>";
-                echo "<td>" . $item['confidence'] . "</td>";
-                echo "</tr>";
-            }
-            echo "</table>";
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            echo "SQL Error: " . $e->getMessage();
+            throw new Exception("SQL Error: " . $e->getMessage());
         } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+            throw new Exception("Error: " . $e->getMessage());
         }
     }
+}
+
+// Function to create a database connection
+function createDatabaseConnection(): PDO
+{
+    $host = ''; // database host
+    $db = ''; // database name
+    $user = ''; // database user
+    $pass = ''; // database password
+    $charset = 'utf8mb4';
+
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    $options = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
+
+    try {
+        return new PDO($dsn, $user, $pass, $options);
+    } catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
+    $id = "competition_id"; // Replace "competition_id" with the actual competition ID
+    generateCompetitionTable($conn, $id);
 }
 ?>
