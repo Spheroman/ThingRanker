@@ -21,7 +21,7 @@ $qrcode = new QRCode($options);
 // Generate the QR code image
 $image = $qrcode->render($data);
 
+
 // Output the image to be used in img
-header('Content-Type: image/png');
-echo $image;
+echo '<img src="'.$image.'"/>';
 }
