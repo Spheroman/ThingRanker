@@ -1,8 +1,8 @@
 # ThingRanker
-Rank things using a pairwise competition with Glicko-2
+Rank things using a pairwise competition with Bayesian Elo Ratings
 ## Database
 So the app has 1 preset table and will make more tables as they are needed. Here's an explanation of them: <br> <br>
-comps table: 
+This is the comps table, it stores a list of all the different comps along with their options and setup settings, including their name and unique ID.
 <table>
   <tr>
     <td>id</td><td>name</td><td>time</td><td>updated</td><td>started</td>
@@ -16,7 +16,7 @@ comps table:
   </tr>
 </table>
 
-Then for every entry in the comps table, theres a new table with name `id`, where `id` is the id from the comps table.
+Then for every entry in the comps table, theres a new table with name `id`, where `id` is the id from the comps table. This table stores the items in the competition as well as their calculated rankings.
 <table>
   <tr>
     <td>id</td><td>name</td><td>rating</td><td>confidence</td>
@@ -29,7 +29,7 @@ Then for every entry in the comps table, theres a new table with name `id`, wher
   </tr>
 </table>
 
-We also have a head2head table where we store the results of the pairings, as well as the upcoming pairings. its title is `id_h2h` where `id` is (you guessed it) the id
+We also have a head2head table where we store the results of the pairings, as well as the upcoming pairings. its title is `id_h2h` where `id` is (you guessed it) the id. As pairings are generated and completed, they are added to this table. This table will be recreated every time the competition is started. It can be used to view matchup stats once implementation for those are complete, alongside recalculating ratings based on different elo systems.
 <table>
   <tr>
     <td>id</td><td>p1</td><td>p2</td><td>winner</td><td>player</td>
@@ -63,4 +63,4 @@ Pairings are shown on this page. It will show 2 options, and the user has to pic
 This page will show the rankings of the items after the competition finishes or halfway through the competition. Doesn't need much else, other than maybe the ability to reset it.
 
 ## Dev Setup
-To work on the project, you need to install MySql, PHP, and Apache2. Connect PHP to Apache2 and make sure that PDO_MySql is enabled. In Apache2, enabe mod_rewrite.so for the links to work correctly. In MySql, create a database named `test` with username `root` and password `billybob`. Once that's all set up correctly, run the table_setup.sql while logged into the database.
+To work on the project, you need to install MySql, PHP, and Apache2. Connect PHP to Apache2 and make sure that PDO_MySql is enabled. In Apache2, enabe mod_rewrite.so for the links to work correctly. In MySql, create a database named `test` with username `root` and password `billybob`. Once that's all set up correctly, run the table_setup.sql while logged into the database. If you're on windows, you can use WAMP to make setup easier.
