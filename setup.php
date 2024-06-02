@@ -34,7 +34,7 @@ try {
     $i = 0;
     foreach ($arr as $v) {
         $i++;
-        $a = htmlspecialchars($v["name"], ENT_NOQUOTES, 'UTF-8');
+        $a = htmlspecialchars($v["name"],ENT_NOQUOTES, 'UTF-8');
         $b = htmlspecialchars($v["rating"], ENT_NOQUOTES, 'UTF-8');
         $c = htmlspecialchars($v["confidence"], ENT_NOQUOTES, 'UTF-8');
         echo "<tr><td>$i</td><td>$a</td><td>$b</td><td>$c</td></tr>\n";
@@ -49,7 +49,7 @@ $conn = null;
 echo "</table>";
 echo "<form action='/add.php' method='POST'>
 thingy Name: <label>
-    <input type='text' name='name'>
+    <input type='text' name='name' autofocus>
 </label><br>
 <input type='hidden' name='redirect' value='setup/'>
 <input type='hidden' name='id' value=$id>

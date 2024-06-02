@@ -7,11 +7,11 @@ function update_ratings(Item $itemA, Item $itemB, $resultA) {
     $expectedB = 1 - $expectedA;
 
     $k = 32; // Sensitivity factor
-    $itemA->rating = $itemA->rating + $k * ($resultA - $expectedA);
-    $itemB->rating = $itemB->rating + $k * ((1 - $resultA) - $expectedB);
+    $itemA->rating = (int) ($itemA->rating + $k * ($resultA - $expectedA));
+    $itemB->rating = (int) ($itemB->rating + $k * ((1 - $resultA) - $expectedB));
 
-    $itemA->confidence = adjust_variance($itemA->confidence, $expectedA, $resultA);
-    $itemB->confidence = adjust_variance($itemB->confidence, $expectedB, 1 - $resultA);
+    $itemA->confidence = (int) adjust_variance($itemA->confidence, $expectedA, $resultA);
+    $itemB->confidence = (int) adjust_variance($itemB->confidence, $expectedB, 1 - $resultA);
 }
 
 function expected_score($ratingA, $varianceA, $ratingB, $varianceB) {
