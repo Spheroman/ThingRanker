@@ -13,10 +13,6 @@ if (!isset($_POST['winner']) || !isset($_POST['id'])) {
     die("Missing 'name' or 'id' parameters.");
 }
 
-
-
-
-
 //Initialize name and id
 $winner = $_POST['winner'];
 $id = $_POST['id'];
@@ -31,11 +27,14 @@ try {
     if(!tableCheck($id, $pdo)){
         throw new Exception("id not found");
     }
+    if(!startedCheck($id, $pdo)){
+        throw new Exception("not started yet");
+    }
 
     $pairing->calculate($pdo)->update($pdo);
 
     $_SESSION["pairing".$id] = serialize(Pairing::fromRandom($id, $pdo));
-    header("Location: /".$_POST["redirect"].$_POST["id"]);
+    header("Location: /".$_POST["id"].$_POST["redirect"]);
     exit();
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();

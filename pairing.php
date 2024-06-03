@@ -2,7 +2,6 @@
 require "bayelo.php";
 require "tablechecker.php";
 
-//TODO: Implement Glicko-2 algorithm and html generation functions
 class pairing
 {
     public int $id;
@@ -55,7 +54,9 @@ class pairing
     static function fromRandom(string $tID, PDO $pdo): pairing
     {
         if(!tableCheck($tID, $pdo))
-            throw new Exception("id not found");
+            throw new Exception("comp not found");
+        if(!startedCheck($tID, $pdo))
+            throw new Exception("comp not started");
         $conn = $pdo->prepare("SELECT * FROM $tID ORDER BY RAND() LIMIT 2");
         $conn->execute();
         $conn->setFetchMode(PDO::FETCH_ASSOC);

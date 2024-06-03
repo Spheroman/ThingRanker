@@ -51,7 +51,13 @@ echo "<form action='/add.php' method='POST'>
 thingy Name: <label>
     <input type='text' name='name' autofocus>
 </label><br>
-<input type='hidden' name='redirect' value='setup/'>
+<input type='hidden' name='redirect' value='/setup'>
 <input type='hidden' name='id' value=$id>
-<input type='submit'>
+<button type='submit'>add item</button>
+</form>";
+
+echo "<form action='/start.php' method='POST'>
+<input type='hidden' name='redirect' value='/pairing'>
+<input type='hidden' name='id' value=$id>
+<button type='submit'>start comp</button>
 </form>";
