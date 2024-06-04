@@ -12,9 +12,22 @@ class comp
 public string $name;
 public string $id;
 public bool $started;
+public mixed $passcode;
+public bool $publicadd;
+public bool $addwhilerun;
+public int $playerlimit;
+public int $pairingtype;
+public int $maxrounds;
 
-function __construct($name) {
-    $this->name = $name;
-    $this->id = generateRandomString(6);
-  }
+
+static function fromName($name): comp
+{
+    $ret = new comp();
+    $ret->name = $name;
+    $ret->id = generateRandomString(6);
+    return $ret;
+}
+
+
+
 }
