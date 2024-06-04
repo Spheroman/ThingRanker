@@ -10,7 +10,7 @@ $password = "billybob";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=test", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $comp = new comp($_POST["name"]);
+    $comp = comp::fromName($_POST["name"]);
 
     //TODO: change logic to only overwrite expired tables (comp last modified 1 yr ago)
     $sql = "

@@ -21,6 +21,13 @@ if(!tableCheck($id, $conn)) {
     return "error";
 }
 
+$sql = $conn->prepare("select name, started, passcode, publicadd, addwhilerun, playerlimit, pairingtype, maxrounds from comps where id = :id");
+$sql->bindParam(":id", $id);
+$sql->execute();
+$comp = $sql->fetchObject(class: "comp");
+
+echo "<h1>$comp->name</h1>";
+
 echo "<table style='border: solid 1px black;'>";
 echo "<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Confidence</th></tr>";
 
@@ -58,5 +65,14 @@ thing name: <label>
 echo "<form action='/start.php' method='POST'>
 <input type='hidden' name='redirect' value='/pairing'>
 <input type='hidden' name='id' value=$id>
-<button type='submit'>start comp</button>
+<button type='submit' onclick='clicked(event)'>start comp</button>
 </form>";
+
+echo "<script>
+function clicked(e)
+{
+    if(!confirm('Start the competition?')) {
+        e.preventDefault();
+    }
+}
+</script>";
