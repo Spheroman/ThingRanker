@@ -52,6 +52,10 @@ body {
     align-content: center;
 }
 
+:root {
+    --background-image: url("backgroundtext.svg");
+}
+
 .home:before{
     content: "";
     position: fixed;
@@ -59,7 +63,7 @@ body {
     height: calc(100vh*sin(60deg) + 100vw*sin(30deg));
     top: 0;
     left: 0;
-    background-image: url("backgroundtext.svg");
+    background-image: var(--background-image);
     background-attachment: fixed;
     background-size: 50%;
     transform-origin: top left;
