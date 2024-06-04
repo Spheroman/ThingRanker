@@ -106,8 +106,8 @@ form {
         display: block; margin: auto; padding: 0.75em 0.75em 0.75em;
         background-color: #FFF; border: solid 2px #FFF; border-radius: 4px;
         box-sizing: border-box;
-        width:max(35%, 300px); height: 3.5em;
-        font-size: 1.25em; color: #353538; font-weight: 600; font-family: inherit;
+        width:max(35vw, 30vh);; height: 3.5em;
+        font-size: max(2vh, 20px); color: #353538; font-weight: 600; font-family: inherit;
         transition: box-shadow .2s linear, border-color .25s ease-out;
     }
     input[type='text']:focus {
@@ -147,8 +147,8 @@ form {
     border-radius: 15px;
     font-family: "Fugaz One";
     color: #FFFFFF;
-    font-size: 56px;
-    width: max(35%, 300px);
+    font-size: max(5vh, 58px);
+    width: max(35vw, 30vh);
     height: 1.70em;
     background-color: #797D4A;
     cursor: pointer;
@@ -162,12 +162,12 @@ form {
 .scroll {
     margin: auto;
     background-color: #E6E6D5;
-    width: 80vw;
+    width: clamp(80vw, 60vh, 95vw);
 }
 
 .content {
     margin:auto;
-    width: 60vw;
+    width: clamp(60vw, 50vh, 75vw);
 }
 
 h3 {
@@ -177,14 +177,14 @@ h3 {
 }
 .info {
     font-family: Gudea;
-    font-size: 48px;
+    font-size: max(4.3vh, 48px);
     font-weight: lighter;
     color: #0b3114;
 }
 
 p1, p2 {
     font-family: Oxygen;
-    font-size: 28px;
+    font-size: max(2.4vh, 28px);
     font-weight: normal;
     color: #0b3114;
 }
