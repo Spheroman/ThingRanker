@@ -1,5 +1,5 @@
 <?php
-require "tablechecker.php";
+require "utils.php";
 
 $servername = "localhost";
 $username = "root";
@@ -19,6 +19,7 @@ try {
     }
 
     $tmp = $id . "(id)";
+    /** @noinspection SqlWithoutWhere */
     $stmt = $pdo->prepare("
         DROP TABLE IF EXISTS $id"."_h2h;
         CREATE TABLE $id" . "_h2h (
@@ -27,11 +28,13 @@ try {
         p2 int NOT NULL,
         winner BOOLEAN,
         player VARCHAR(20), 
+        uuid CHAR(8),
         iscomplete BOOLEAN NOT NULL DEFAULT FALSE,
         FOREIGN KEY(p1) REFERENCES $tmp,
         FOREIGN KEY(p2) REFERENCES $tmp
     );
-    UPDATE comps SET started = 1 WHERE id = :id
+    UPDATE comps SET started = 1 WHERE id = :id;
+    UPDATE $id SET rating = 1500, confidence = 500;
     ");
     $stmt->bindParam(":id", $id);
     $stmt->execute();

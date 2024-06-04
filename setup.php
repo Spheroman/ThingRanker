@@ -1,7 +1,6 @@
 <?php
 // page.com/setup/[id]
 require "comp.php";
-require "tablechecker.php";
 /*TODO: proper HTML and CSS,
   TODO: add other options such as ranking method and pairing method
   TODO: add a pin to lock the setup page
@@ -48,8 +47,8 @@ $conn = null;
 
 echo "</table>";
 echo "<form action='/add.php' method='POST'>
-thingy Name: <label>
-    <input type='text' name='name' autofocus>
+thing name: <label>
+    <input type='text' name='name' autofocus autocomplete='off'>
 </label><br>
 <input type='hidden' name='redirect' value='/setup'>
 <input type='hidden' name='id' value=$id>

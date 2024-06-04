@@ -1,6 +1,6 @@
 <?php
 require "bayelo.php";
-require "tablechecker.php";
+require "utils.php";
 
 class pairing
 {
@@ -8,17 +8,19 @@ class pairing
     public Item $p1; //item 1
     public Item $p2; //item 2
     public string $player; //the player name
+    public string $uuid; //user id
     public bool $winner; //did p1 win
     public string $tID; // ID of the tournament
     public bool $iscomplete; // Indicates if the pairing is complete
 
     //TODO: get a pairing from 1 of 3 options: random, rating based, and reliability.
-    private function __construct(int $id, Item $p1, Item $p2, string $player, bool $winner, string $tID, bool $iscomplete)
+    private function __construct(int $id, Item $p1, Item $p2, string $player, string $uuid, bool $winner, string $tID, bool $iscomplete)
     {
         $this->id = $id;
         $this->p1 = $p1;
         $this->p2 = $p2;
         $this->player = $player;
+        $this->uuid = $uuid;
         $this->winner = $winner;
         $this->tID = $tID;
         $this->iscomplete = $iscomplete;
@@ -26,7 +28,7 @@ class pairing
 
     private static function fromArray($in): pairing
     {
-        return new Pairing($in["id"], $in["p1"], $in["p2"], $in["player"], $in["winner"], $in["tID"], $in["iscomplete"]);
+        return new Pairing($in["id"], $in["p1"], $in["p2"], $in["player"], $in["uuid"], $in["winner"], $in["tID"], $in["iscomplete"]);
     }
 
     /**
@@ -69,6 +71,7 @@ class pairing
         $out["p2"]->name = htmlspecialchars($out["p2"]->name);
         $out["id"] = -1;
         $out["player"] = "";
+        $out["uuid"] = "";
         $out["winner"] = "";
         $out["tID"] = $tID;
         $out["iscomplete"] = false;
@@ -124,7 +127,7 @@ VALUES (:item1_id,  :item2_id, :player, :winner);
     {
         $tableName = $this->tID . "_h2h";
         $insertSql = "UPDATE $tableName
-SET p1 = :item1_id, p2 = :item2_id, player = :player, winner = :winner, iscomplete = :iscomplete
+SET p1 = :item1_id, p2 = :item2_id, player = :player, winner = :winner, iscomplete = :iscomplete, uuid = :uuid
 WHERE id=:pid
 ";
         $stmt = $pdo->prepare($insertSql);
@@ -134,6 +137,7 @@ WHERE id=:pid
         $stmt->bindParam(':winner', $this->winner, PDO::PARAM_BOOL);
         $stmt->bindParam(':iscomplete', $this->iscomplete, PDO::PARAM_BOOL);
         $stmt->bindParam(':pid', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam("uuid", $this->uuid);
         $stmt->execute();
     }
 }

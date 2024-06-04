@@ -1,5 +1,5 @@
 <?php
-require "tablechecker.php";
+require "utils.php";
 
 $servername = "localhost";
 $username = "root";

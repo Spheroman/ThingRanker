@@ -13,6 +13,10 @@ $id = $_GET["id"];
 $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+if(!isset($_SESSION["uuid"])){
+    $_SESSION["uuid"] = generateRandomString(8);
+}
+
 if(!isset($_SESSION["pairing" . $id])) {
     if(!tableCheck($id, $pdo)) die("comp not found");
     if(!startedCheck($id, $pdo)) die("comp has not started");

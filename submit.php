@@ -18,6 +18,7 @@ $winner = $_POST['winner'];
 $id = $_POST['id'];
 
 if(!isset($_SESSION['pairing'.$id])) die("missing pairing");
+if(!isset($_SESSION["uuid"])) die("missing uuid");
 
 $pairing = unserialize($_SESSION["pairing".$id]);
 $pairing->setWinner($winner);
@@ -31,6 +32,7 @@ try {
         throw new Exception("not started yet");
     }
 
+    $pairing->uuid = $_SESSION["uuid"];
     $pairing->calculate($pdo)->update($pdo);
 
     $_SESSION["pairing".$id] = serialize(Pairing::fromRandom($id, $pdo));
@@ -39,4 +41,3 @@ try {
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-?>
