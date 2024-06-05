@@ -1,16 +1,19 @@
 <?php
 // page.com/setup/[id]
 require "comp.php";
+require_once "config.php";
+
 /*TODO: proper HTML and CSS,
   TODO: add other options such as ranking method and pairing method
   TODO: add a pin to lock the setup page
   TODO: add options to add items, delete items, reset the competition, to delete the competition, and to reset the deletion timer (just update in database)
 */
 
-$servername = "localhost";
-$username = "root";
-$password = "billybob";
-$dbname = "test";
+$servername = DB_HOST;
+$username = DB_USER;
+$password = DB_PASS;
+$dbname = DB_NAME;
+
 $id = $_GET["id"];
 
 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);

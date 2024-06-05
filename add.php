@@ -1,10 +1,11 @@
 <?php
 require "utils.php";
+require_once "config.php";
 
-$servername = "localhost";
-$username = "root";
-$password = "billybob";
-$dbname = "test";
+$servername = DB_HOST;
+$username = DB_USER;
+$password = DB_PASS;
+$dbname = DB_NAME;
 
 
 if (!isset($_POST['name']) || !isset($_POST['id'])) {

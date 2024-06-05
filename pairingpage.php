@@ -1,11 +1,13 @@
 <?php
 session_start();
 require "pairing.php";
+require_once "config.php";
 
-$servername = "localhost";
-$username = "root";
-$password = "billybob";
-$dbname = "test";
+$servername = DB_HOST;
+$username = DB_USER;
+$password = DB_PASS;
+$dbname = DB_NAME;
+
 $id = $_GET["id"];
 // [id]/pairing
 //TODO: add form to add a thing mid comp if enabled
