@@ -1,14 +1,18 @@
 <?php
 //hidden from users
 require "comp.php";
-$servername = "localhost";
-$username = "root";
-$password = "billybob";
+require_once "config.php";
+
+$servername = DB_HOST;
+$username = DB_USER;
+$password = DB_PASS;
+$dbname = DB_NAME;
+
 
 
 //TODO: maybe add a pin to lock the setup page, better ID logic
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=test", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $comp = comp::fromName($_POST["name"]);
 
