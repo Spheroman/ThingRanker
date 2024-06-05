@@ -11,6 +11,7 @@ create table comps
     publicadd   tinyint(1) default 0       not null,
     addwhilerun tinyint(1) default 0       not null,
     playerlimit smallint   default -1      not null,
-    pairingtype tinyint    default 0       not null,
-    maxrounds   smallint   default -1      not null
+    maxrounds   smallint   default -1      not null,
+    pairingtype   INT DEFAULT 0 not null,
+    rankingoption INT DEFAULT 0 not null
 );
