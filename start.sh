@@ -25,6 +25,7 @@ if ! [ -x "$(command -v docker compose)" ];
     $sh_c apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 fi
 
+wait
 if ! [ -e ./ThingRanker/compose.yaml ]
   then
     echo compose.yaml not found, fetching repo
