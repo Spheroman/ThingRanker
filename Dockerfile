@@ -16,6 +16,5 @@ COPY . /var/www/html
 
 RUN a2enmod rewrite
 RUN docker-php-ext-install pdo pdo_mysql
-RUN --host=0.0.0.0
 
 USER www-data
