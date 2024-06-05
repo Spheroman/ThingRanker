@@ -1,6 +1,4 @@
 {
     "require": {
-      "ext-stats": "*",
-      "ext-pdo": "*"
     }
 }
