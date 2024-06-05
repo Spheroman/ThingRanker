@@ -63,8 +63,8 @@ Pairings are shown on this page. It will show 2 options, and the user has to pic
 This page will show the rankings of the items after the competition finishes or halfway through the competition. Doesn't need much else, other than maybe the ability to reset it.
 
 ## Docker Installation
-For a more reliable install, manually install docker and run `docker compose up`. <br>
-For a fast and easy installation, you can run the start.sh file. It can be downloaded and run with `curl -sfL https://install.jacklucksack.com | sudo sh`. If you want to run it again, you can either use the same command in the original directory or you can cd into ThingRanker and run `docker compose up`.
+For a more reliable install, manually install docker and run `docker compose up`. <br> <br>
+For a fast and easy installation, you can run the start.sh file. Do note that this file has only been tested on debian systems, so there is a chance it doesn't work. It can be downloaded and run with `curl -sfL https://install.jacklucksack.com | sudo sh`. If you want to run it again, you can either use the same command in the original directory or you can cd into ThingRanker and run `docker compose up`.
 <br> <br>
 Once the output says server x plugin ready, you can use the app. 
 
