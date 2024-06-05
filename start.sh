@@ -41,7 +41,7 @@ if ! [ -e ./ThingRanker/compose.yaml ]
       $sh_c "apt-get install -y git"
     fi
     echo compose.yaml not found, fetching repo
-    git fetch "https://github.com/Spheroman/ThingRanker.git"
+    git clone "https://github.com/Spheroman/ThingRanker.git"
     cd ThingRanker
     git checkout docker
   else
