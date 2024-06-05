@@ -7,7 +7,7 @@ class Item
     public int $id;
     public string $name;
     public int $rating;
-    public int $confidence;
+    public int $variance;
 
     function __toString()
     {
@@ -21,7 +21,7 @@ class Item
     {
         if(!tableCheck($tID, $pdo))
             throw new Exception("tid not found");
-        $conn = $pdo->prepare("SELECT id, name, rating, confidence FROM $tID WHERE id=:id");
+        $conn = $pdo->prepare("SELECT id, name, rating, variance FROM $tID WHERE id=:id");
         $conn->bindParam(":id", $id, PDO::PARAM_INT);
         $conn->execute();
         $conn->setFetchMode(PDO::FETCH_ASSOC);
@@ -35,13 +35,13 @@ class Item
     function update(PDO $pdo): self
     {
         try{
-        $stmt = $pdo->prepare("SELECT name, rating, confidence FROM $this->tID WHERE id=:id");
+        $stmt = $pdo->prepare("SELECT name, rating, variance FROM $this->tID WHERE id=:id");
         $stmt->bindParam(":id", $this->id);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $arr = $stmt->fetch();
         $this->rating = $arr['rating'];
-        $this->confidence = $arr['confidence'];
+        $this->variance = $arr['variance'];
         } catch (PDOException $e) {
         echo "SQL Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
         }
@@ -53,10 +53,10 @@ class Item
         try{/** @noinspection SqlResolve */
         $stmt = $pdo->prepare("UPDATE $this->tID
                                   SET rating = :rating, 
-                                      confidence = :confidence 
+                                      variance = :variance 
                                   WHERE id = :id");
         $stmt->bindParam(':rating', $this->rating, PDO::PARAM_INT);
-        $stmt->bindParam(':confidence', $this->confidence, PDO::PARAM_INT);
+        $stmt->bindParam(':variance', $this->variance, PDO::PARAM_INT);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
         $stmt->execute();
         } catch (PDOException $e) {
