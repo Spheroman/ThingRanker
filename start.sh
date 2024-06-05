@@ -25,21 +25,21 @@ if ! [ -x "$(command -v docker compose)" ];
 fi
 
 if ! [ -e ./ThingRanker/compose.yaml ]
-  if ! [ -x "$(command -v git)" ];
   then
-    echo git not found, installing
-    user="$(id -un 2>/dev/null || true)"
-    if [ "$user" != 'root' ]; then
-      if command_exists sudo; then
-        sh_c='sudo -E sh -c'
-      else
-        echo Error: needs sudo privledges to run install script
-        exit 1
+    if ! [ -x "$(command -v git)" ];
+    then
+      echo git not found, installing
+      user="$(id -un 2>/dev/null || true)"
+      if [ "$user" != 'root' ]; then
+        if command_exists sudo; then
+          sh_c='sudo -E sh -c'
+        else
+          echo Error: needs sudo privledges to run install script
+          exit 1
+        fi
       fi
+      $sh_c "apt-get install -y git"
     fi
-    $sh_c "apt-get install -y git"
-  fi
-  then
     echo compose.yaml not found, fetching repo
     git fetch "https://github.com/Spheroman/ThingRanker.git"
     cd ThingRanker
