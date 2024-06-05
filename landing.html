@@ -100,14 +100,12 @@
                 padding: 0;
                 list-style: none;
                 background: #FFFFFF;
-                font-family: Gudea;
             }
 
             li {
                 padding: 20px;
                 border-top: 1px solid #cccccc;
                 scroll-snap-align: start;
-                font-family: Gudea;
             }
 
             li:first-child {
@@ -195,11 +193,6 @@
                 color: #FFFFFF;
             }
             
-            .remove {
-                background-color: #c11919;
-                color: #FFFFFF;
-                border-radius: 15px;
-            }
 
             @media (max-width: 800px) {
                 h1{
@@ -234,34 +227,37 @@
 
         <section>
             <div class="list">
-              <ul class="list" id="thing-list">
+              <ul>
+                <li>Thing1</li>
+                <li>Thing2</li>
+                <li>Thing3</li>
+                <li>Thing4</li>
+                <li>Thing5</li>
+                <li>Thing6</li>
+                <li>Thing7</li>
+                <li>Thing8</li>
+                <li>Thing9</li>
+                <li>Thing10</li>
+                <li>Thing11</li>
+                <li>Thing12</li>
+                <li>Thing13</li>
+                <li>Thing14</li>
+                <li>Thing15</li>
+                <li>Thing16</li>
+                <li>Thing17</li>
+                <li>Thing18</li>
+                <li>Thing19</li>
+                <li>Thing20</li>
               </ul>
             </div>
         </section>
 
-        <form>
-            <input id="myInput" type="text" name="userinput" class="add" onfocus="this.value=''" placeholder="+ADD ITEM">
-            <input id="myBtn" type="button" class="button" value="ADD" onclick="AddLi(userinput.value)">
-        </form> 
+          <form action="/new.php">
+            <div class="field">
+                <input type="text" class="add" placeholder="+ADD ITEM"/>
+            </div>
+            <input class = "button" type="submit" value="ADD">
+        </form>
 
-        <script>
-            var input = document.getElementById("myInput");
-            function AddLi(str)
-            {
-                var li = document.createElement('li');
-                li.appendChild(document.createTextNode(str))
-                li.innerHTML += ' <button class="remove" onclick="this.parentNode.remove()">X</button>';
-                document.getElementById("thing-list").appendChild(li);
-                input.value = " ";
-            }
-
-            input.addEventListener("keypress", function(event) {
-
-            if (event.key === "Enter") {
-                event.preventDefault();
-                document.getElementById("myBtn").click();
-            }
-            });
-        </script>
     </body>
 </html>
