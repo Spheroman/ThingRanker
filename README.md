@@ -63,8 +63,10 @@ Pairings are shown on this page. It will show 2 options, and the user has to pic
 This page will show the rankings of the items after the competition finishes or halfway through the competition. Doesn't need much else, other than maybe the ability to reset it.
 
 ## Docker Installation
-For a more reliable install, manually install docker and run `docker compose up`.
-For a fast and easy installation, you can run the start.sh file. It can be downloaded and run with `curl -sfL https://install.jacklucksack.com | sudo sh`
+For a more reliable install, manually install docker and run `docker compose up`. <br>
+For a fast and easy installation, you can run the start.sh file. It can be downloaded and run with `curl -sfL https://install.jacklucksack.com | sudo sh`. If you want to run it again, you can either use the same command in the original directory or you can cd into ThingRanker and run `docker compose up`.
+<br> <br>
+Once the output says server x plugin ready, you can use the app. 
 
 ## Dev Setup
 To work on the project, you need to install MySql, PHP, and Apache2. Connect PHP to Apache2 and make sure that PDO_MySql is enabled. In Apache2, enabe mod_rewrite.so for the links to work correctly. In MySql, create a database named `test` with username `root` and password `billybob`. Once that's all set up correctly, run the install_db.sql while logged into the database. If you're on windows, you can use WAMP to make setup easier.
