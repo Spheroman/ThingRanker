@@ -27,7 +27,7 @@ fi
 
 if ! [ -e ./ThingRanker/compose.yaml ]
   then
-    echo compose not found, fetching repo
+    echo compose.yaml not found, fetching repo
     git fetch "https://github.com/Spheroman/ThingRanker.git"
     cd ThingRanker
     git checkout docker
