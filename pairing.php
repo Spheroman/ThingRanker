@@ -12,9 +12,10 @@ class pairing
     public bool $winner; //did p1 win
     public string $tID; // ID of the tournament
     public bool $iscomplete; // Indicates if the pairing is complete
-
-    //TODO: get a pairing from 1 of 3 options: random, rating based, and reliability.
-    private function __construct(int $id, Item $p1, Item $p2, string $player, string $uuid, bool $winner, string $tID, bool $iscomplete)
+    public int $pairingMethod; // Pairing method: 0 = random, 1 = rating based, 2 = reliability
+    public int $rankingOption; // Ranking option
+    
+    private function __construct(int $id, Item $p1, Item $p2, string $player, string $uuid, bool $winner, string $tID, bool $iscomplete, int $pairingMethod, int $rankingOption)
     {
         $this->id = $id;
         $this->p1 = $p1;
@@ -24,11 +25,13 @@ class pairing
         $this->winner = $winner;
         $this->tID = $tID;
         $this->iscomplete = $iscomplete;
+        $this->pairingMethod = $pairingMethod;
+        $this->rankingOption = $rankingOption;
     }
 
     private static function fromArray($in): pairing
     {
-        return new Pairing($in["id"], $in["p1"], $in["p2"], $in["player"], $in["uuid"], $in["winner"], $in["tID"], $in["iscomplete"]);
+        return new Pairing($in["id"], $in["p1"], $in["p2"], $in["player"], $in["uuid"], $in["winner"], $in["tID"], $in["iscomplete"], $in["pairingMethod"], $in["rankingOption"]);
     }
 
     /**
@@ -39,7 +42,7 @@ class pairing
         if(!tableCheck($tID, $pdo))
             throw new Exception("id not found");
         $h2h = $tID . "_h2h";
-        $conn = $pdo->prepare("SELECT id, p1, p2, winner, player, iscomplete FROM $h2h WHERE id=:id");
+        $conn = $pdo->prepare("SELECT id, p1, p2, winner, player, iscomplete, pairingMethod, rankingOption FROM $h2h WHERE id=:id");
         $conn->bindParam(":id", $id, PDO::PARAM_INT);
         $conn->execute();
         $conn->setFetchMode(PDO::FETCH_ASSOC);
@@ -75,6 +78,8 @@ class pairing
         $out["winner"] = "";
         $out["tID"] = $tID;
         $out["iscomplete"] = false;
+        $out["pairingMethod"] = 0; // Default pairing method (random)
+        $out["rankingOption"] = 0; // Default ranking option
         $ret = Pairing::fromArray($out);
         $ret->insert($pdo);
         return $ret;
@@ -110,14 +115,15 @@ class pairing
     function insert(PDO $pdo): void
     {
         $tableName = $this->tID . "_h2h";
-        $insertSql = "INSERT INTO $tableName (p1, p2, player, winner) 
-VALUES (:item1_id,  :item2_id, :player, :winner);
-   ";
+        $insertSql = "INSERT INTO $tableName (p1, p2, player, winner, pairingMethod, rankingOption) 
+VALUES (:item1_id,  :item2_id, :player, :winner, :pairingMethod, :rankingOption);";
         $stmt = $pdo->prepare($insertSql);
         $stmt->bindParam(':item1_id', $this->p1->id, PDO::PARAM_INT);
         $stmt->bindParam(':item2_id', $this->p2->id, PDO::PARAM_INT);
         $stmt->bindParam(':player', $this->player, PDO::PARAM_STR);
         $stmt->bindParam(':winner', $this->winner, PDO::PARAM_BOOL);
+        $stmt->bindParam(':pairingMethod', $this->pairingMethod, PDO::PARAM_INT);
+        $stmt->bindParam(':rankingOption', $this->rankingOption, PDO::PARAM_INT);
         $stmt->execute();
         $this->id = $pdo->lastInsertId();
 
@@ -127,7 +133,7 @@ VALUES (:item1_id,  :item2_id, :player, :winner);
     {
         $tableName = $this->tID . "_h2h";
         $insertSql = "UPDATE $tableName
-SET p1 = :item1_id, p2 = :item2_id, player = :player, winner = :winner, iscomplete = :iscomplete, uuid = :uuid
+SET p1 = :item1_id, p2 = :item2_id, player = :player, winner = :winner, iscomplete = :iscomplete, uuid = :uuid, pairingMethod = :pairingMethod, rankingOption = :rankingOption
 WHERE id=:pid
 ";
         $stmt = $pdo->prepare($insertSql);
@@ -138,6 +144,8 @@ WHERE id=:pid
         $stmt->bindParam(':iscomplete', $this->iscomplete, PDO::PARAM_BOOL);
         $stmt->bindParam(':pid', $this->id, PDO::PARAM_INT);
         $stmt->bindParam("uuid", $this->uuid);
+        $stmt->bindParam(':pairingMethod', $this->pairingMethod, PDO::PARAM_INT);
+        $stmt->bindParam(':rankingOption', $this->rankingOption, PDO::PARAM_INT);
         $stmt->execute();
     }
 }
