@@ -63,4 +63,4 @@ Pairings are shown on this page. It will show 2 options, and the user has to pic
 This page will show the rankings of the items after the competition finishes or halfway through the competition. Doesn't need much else, other than maybe the ability to reset it.
 
 ## Dev Setup
-To work on the project, you need to install MySql, PHP, and Apache2. Connect PHP to Apache2 and make sure that PDO_MySql is enabled. In Apache2, enabe mod_rewrite.so for the links to work correctly. In MySql, create a database named `test` with username `root` and password `billybob`. Once that's all set up correctly, run the table_setup.sql while logged into the database. If you're on windows, you can use WAMP to make setup easier.
+To work on the project, you need to install MySql, PHP, and Apache2. Connect PHP to Apache2 and make sure that PDO_MySql is enabled. In Apache2, enabe mod_rewrite.so for the links to work correctly. In MySql, create a database named `test` with username `root` and password `billybob`. Once that's all set up correctly, run the install_db.sql while logged into the database. If you're on windows, you can use WAMP to make setup easier.
