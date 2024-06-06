@@ -19,7 +19,7 @@ $id = $_GET["id"];
 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if(!tableCheck($id, $conn)) {
+if (!tableCheck($id, $conn)) {
     echo "comp not found";
     return "error";
 }
@@ -43,7 +43,7 @@ try {
     $i = 0;
     foreach ($arr as $v) {
         $i++;
-        $a = htmlspecialchars($v["name"],ENT_NOQUOTES, 'UTF-8');
+        $a = htmlspecialchars($v["name"], ENT_NOQUOTES, 'UTF-8');
         $b = htmlspecialchars($v["rating"], ENT_NOQUOTES, 'UTF-8');
         $c = htmlspecialchars($v["confidence"], ENT_NOQUOTES, 'UTF-8');
         echo "<tr><td>$i</td><td>$a</td><td>$b</td><td>$c</td></tr>\n";
@@ -51,7 +51,7 @@ try {
 } catch (PDOException $e) {
     echo "SQL Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
 } catch (Exception $e) {
-  echo "Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
+    echo "Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
 }
 $conn = null;
 
@@ -65,6 +65,24 @@ thing name: <label>
 <button type='submit'>add item</button>
 </form>";
 
+$check['live'] = $comp->addwhilerun == 1 ? 'checked' : '';
+$check['pubadd'] = $comp->publicadd == 1 ? 'checked' : '';
+$check['captog'] = $comp->playerlimit != -1 ? 'checked' : '';
+
+echo "
+<h2>Options</h2>
+<form action='/options.php' method='POST'>
+<input type='checkbox' id='pubadd' name='pubadd' value='1' {$check['pubadd']}>
+<label for='pubadd'>Allow anyone to add items to the rankings</label><br>
+<input type='checkbox' id='live' name='live' value='1' {$check['live']}>
+<label for='live'>Allow additions to the list while rankings are running</label><br>
+<input type='checkbox' id='playercap' name='playercap' value=1' {$check['captog']}>
+<label for='playercap'>Limit number of players</label>
+<input type='number' id='capcount' name='capcount' min='1' value='{$comp->playerlimit}' style='display: none'>
+</form>
+
+";
+
 echo "<form action='/start.php' method='POST'>
 <input type='hidden' name='redirect' value='/pairing'>
 <input type='hidden' name='id' value=$id>
@@ -72,6 +90,15 @@ echo "<form action='/start.php' method='POST'>
 </form>";
 
 echo "<script>
+$(function () {
+    $('#playercap').click(function () {
+        if ($(this).is(':checked')) {
+            $('#capcount').show();
+        } else {
+            $('#capcount').hide();
+        }
+    });
+});
 function clicked(e)
 {
     if(!confirm('Start the competition?')) {
