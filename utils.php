@@ -36,7 +36,7 @@ function generateRandomString($length = 10): string
 }
 
 // Function to generate table dynamically
-public function generateTable(PDO $pdo)
+function generateTable(PDO $pdo)
 {
     try {
         // Check if the competition table exists
