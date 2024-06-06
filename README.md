@@ -19,13 +19,13 @@ This is the comps table, it stores a list of all the different comps along with 
 Then for every entry in the comps table, theres a new table with name `id`, where `id` is the id from the comps table. This table stores the items in the competition as well as their calculated rankings.
 <table>
   <tr>
-    <td>id</td><td>name</td><td>rating</td><td>confidence</td>
+    <td>id</td><td>name</td><td>rating</td><td>variance</td>
   </tr>
   <tr>
     <td>an auto incrementing integer starting at 1</td>
     <td>name of the entry in the competition</td>
     <td>Glicko-2 rating. default 1000</td>
-    <td>Glicko-2 confidence. default 500</td>
+    <td>Glicko-2 variance. default 500</td>
   </tr>
 </table>
 
