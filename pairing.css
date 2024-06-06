@@ -72,6 +72,7 @@ h1{
     flex-direction: row;
     height: 80vh;
     width: 100vw;
+    align-content: center;
 }
 
 .flex-item-left {
@@ -92,8 +93,8 @@ h1{
     font-family: Fugaz One;
     font-size: 6vw;
     color: #0D3718;
-    padding-top: 8%;
-    padding-bottom: 8%;
+    padding-top: 10%;
+    padding-bottom: 10%;
     padding-left: 5%;
     padding-right: 5%;
     flex: 10%;
