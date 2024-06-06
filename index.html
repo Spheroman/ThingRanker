@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -68,9 +66,12 @@
                  style="filter: invert(15%) sepia(25%) saturate(1236%) hue-rotate(82deg) brightness(94%) contrast(99%); height: 5vh" alt="ThingRanker Github"></a>
     </footer>
 </section>
-</body>
-</html>
 <script>
+    //Checks if browser is Firefox. If so, changes backgroundtext.svg to stillbackgroundtext.svg
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        document.documentElement.style.setProperty('--background-image', 'url("stillbackgroundtext.svg")');
+    }
+    
     $("#comp").each(function (type) {
 
         $(this).keypress(function () {
@@ -84,3 +85,5 @@
         });
     });
 </script>
+</body>
+</html>
