@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Setup</title>
-        <link href="pairing.css" rel="stylesheet">
+        <link href="/pairing.css" rel="stylesheet">
     </head>
 
     <body>
@@ -40,7 +40,7 @@ $stmt = $pdo->prepare("SELECT name FROM comps WHERE id = :id");
 $stmt->bindParam(":id", $id);
 $stmt->execute();
 $name = $stmt->fetch(PDO::FETCH_ASSOC)['name'];
-echo "<h1>$name</h1>";
+echo "<a href='/$id'><h1>$name</h1></a>";
 
 $_SESSION["pairing". $id] = serialize($curr);
 $p1 = $curr->p1;

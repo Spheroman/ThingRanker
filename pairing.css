@@ -31,6 +31,14 @@
     font-style: normal;
 }
 
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
 * {
     box-sizing: border-box;
 }

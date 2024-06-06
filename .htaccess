@@ -3,8 +3,6 @@ RewriteEngine On
 
 RewriteRule ^(.{6}+)/setup$ setup.php?id=$1 [QSA,L]
 RewriteRule ^(.{6}+)/pairing$ pairingpage.php?id=$1 [QSA,L]
-RewriteRule ^(.{6}+)/pairing.css$ pairing.css [QSA,L]
-
 RewriteRule ^(.{6}+)/ranking$ ranking.php?id=$1 [QSA,L]
 
 RewriteRule ^(.{6}+)/?$ landing.php?id=$1 [QSA,L]
