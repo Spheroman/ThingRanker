@@ -46,7 +46,7 @@ public function generateTable(PDO $pdo)
         }
 
         // Query the competition entries
-        $stmt = $pdo->prepare("SELECT id, name, rating, confidence FROM {$this->id} ORDER BY rating DESC");
+        $stmt = $pdo->prepare("SELECT id, name, rating, variance FROM {$this->id} ORDER BY rating DESC");
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
