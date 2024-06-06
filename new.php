@@ -23,7 +23,7 @@ try {
         id int auto_increment primary key,
         name varchar(50) not null,
         rating smallint default 1000,
-        confidence smallint default 500
+        variance smallint default 500
     );
     CREATE trigger $comp->id" . "trigger
     AFTER insert
