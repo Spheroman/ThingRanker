@@ -32,11 +32,11 @@ $comp = $sql->fetchObject(class: "comp");
 echo "<h1>$comp->name</h1>";
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Confidence</th></tr>";
+echo "<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Variance</th></tr>";
 
 //below is all we need to copy for the new tablefunction php file
 try {
-    $sql = $conn->prepare("SELECT id, name, rating, confidence FROM $id ORDER BY rating DESC;");
+    $sql = $conn->prepare("SELECT id, name, rating, variance FROM $id ORDER BY rating DESC;");
     $sql->execute();
     $sql->setFetchMode(PDO::FETCH_ASSOC);
     $arr = $sql->fetchAll();
@@ -45,7 +45,7 @@ try {
         $i++;
         $a = htmlspecialchars($v["name"],ENT_NOQUOTES, 'UTF-8');
         $b = htmlspecialchars($v["rating"], ENT_NOQUOTES, 'UTF-8');
-        $c = htmlspecialchars($v["confidence"], ENT_NOQUOTES, 'UTF-8');
+        $c = htmlspecialchars($v["variance"], ENT_NOQUOTES, 'UTF-8');
         echo "<tr><td>$i</td><td>$a</td><td>$b</td><td>$c</td></tr>\n";
     }
 } catch (PDOException $e) {
