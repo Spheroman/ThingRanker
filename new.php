@@ -9,7 +9,6 @@ $password = DB_PASS;
 $dbname = DB_NAME;
 
 
-
 //TODO: maybe add a pin to lock the setup page, better ID logic
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -32,7 +31,7 @@ try {
     BEGIN
         UPDATE comps
         SET updated = NOW()
-        WHERE id = '$comp->id';
+        WHERE id = :comp_id;
     END;
     INSERT INTO comps (id, name) VALUES (:comp_id, :comp_name)
     ";

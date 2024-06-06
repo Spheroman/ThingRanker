@@ -1,6 +1,6 @@
 <?php
 
-require "utils.php";
+require_once "utils.php";
 
 //TODO: improve ID generation function
 //https://stackoverflow.com/a/16738409
