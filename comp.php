@@ -18,6 +18,7 @@ public bool $addwhilerun;
 public int $playerlimit;
 public int $pairingtype;
 public int $maxrounds;
+public int $rankingoption;
 
 
 static function fromName($name): comp
@@ -25,6 +26,13 @@ static function fromName($name): comp
     $ret = new comp();
     $ret->name = $name;
     $ret->id = generateRandomString(6);
+    $ret->started = false;
+    $ret->publicadd = false;
+    $ret->addwhilerun = false;
+    $ret->playerlimit = 0;
+    $ret->pairingtype = 0;
+    $ret->maxrounds = 0;
+    $ret->rankingoption = 0;
     return $ret;
 }
 

@@ -23,7 +23,9 @@ if(!isset($_SESSION["pairing" . $id])) {
     if(!tableCheck($id, $pdo)) die("comp not found");
     if(!startedCheck($id, $pdo)) die("comp has not started");
     $curr = Pairing::fromRandom($id, $pdo);
-} else $curr = unserialize($_SESSION["pairing" . $id]);
+} else {
+    $curr = unserialize($_SESSION["pairing" . $id]);
+}
 if($curr->iscomplete){
     $curr = Pairing::fromRandom($id, $pdo);
 }
