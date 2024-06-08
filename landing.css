@@ -1,5 +1,5 @@
 :root {
-    --container-height: 60vh;
+    --container-height: 50vh;
 }
 
 form {
@@ -54,6 +54,25 @@ form {
     color: #FFFFFF;
 }
 
+.start {
+    border: 2px solid #797D4A;
+    border-radius: 10px;
+    font-family: Fascinate;
+    color: #FFFFFF;
+    font-size: 3.5vw;
+    width: 35%; 
+    height: 5vw;
+    background-color: #797D4A;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    margin-top: 1vh;
+}
+
+    .start:hover {
+    background-color: #b8bd74;
+    color: #FFFFFF;
+}
+
 .remove {
     background-color: #c11919;
     color: #FFFFFF;
@@ -66,12 +85,17 @@ form {
         padding-bottom: 0vh;
 
         input[type='text']{
-            width: 70vw;
+            width: 65vw;
             font-size: 3vw;
         }
     }
     .button{
         font-size: 3vw;
-        width: 70vw;
+        width: 65vw;
+    }
+    .start{
+        font-size: 7vw;
+        width: 65vw;
+        height: 10vw;
     }
 }
