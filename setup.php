@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="/layout.css">
+        <link rel="stylesheet" href="/setup.css">
+        <link rel="stylesheet" href="/setuptable.css">
+        <link rel="stylesheet" href="/fonts.css">
+
 <?php
 // page.com/setup/[id]
 require "comp.php";
@@ -29,49 +38,35 @@ $sql->bindParam(":id", $id);
 $sql->execute();
 $comp = $sql->fetchObject(class: "comp");
 
-echo "<h1>$comp->name</h1>";
+echo "<title>$comp->name</title>
+    </head>
+    <body>
+        <a href='/$id'><h1>$comp->name</h1></a> <section>
+            <div>
+            <table>";
+generateTable($id, $conn, false);
+echo "
 
-echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Variance</th></tr>";
-
-//below is all we need to copy for the new tablefunction php file
-try {
-    $sql = $conn->prepare("SELECT id, name, rating, variance FROM $id ORDER BY rating DESC;");
-    $sql->execute();
-    $sql->setFetchMode(PDO::FETCH_ASSOC);
-    $arr = $sql->fetchAll();
-    $i = 0;
-    foreach ($arr as $v) {
-        $i++;
-        $a = htmlspecialchars($v["name"],ENT_NOQUOTES, 'UTF-8');
-        $b = htmlspecialchars($v["rating"], ENT_NOQUOTES, 'UTF-8');
-        $c = htmlspecialchars($v["variance"], ENT_NOQUOTES, 'UTF-8');
-        echo "<tr><td>$i</td><td>$a</td><td>$b</td><td>$c</td></tr>\n";
-    }
-} catch (PDOException $e) {
-    echo "SQL Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
-} catch (Exception $e) {
-  echo "Error: " . htmlspecialchars($e->getMessage(), ENT_NOQUOTES, 'UTF-8');
-}
-$conn = null;
-
-echo "</table>";
-echo "<form action='/add.php' method='POST'>
-thing name: <label>
-    <input type='text' name='name' autofocus autocomplete='off'>
+</table></div>
+        </section> <form action='/add.php' method='POST'>
+<label>
+    <input type='text' name='name' autofocus autocomplete='off' class='add'>
 </label><br>
 <input type='hidden' name='redirect' value='/setup'>
 <input type='hidden' name='id' value=$id>
-<button type='submit'>add item</button>
-</form>";
+<button type='submit' class='button'>Add Item</button>
+</form>
 
-echo "<form action='/start.php' method='POST'>
+<form action='/start.php' method='POST'>
 <input type='hidden' name='redirect' value='/pairing'>
 <input type='hidden' name='id' value=$id>
-<button type='submit' onclick='clicked(event)'>start comp</button>
-</form>";
+<button type='submit' onclick='clicked(event)' class='start'>START!</button>
+</form>
 
-echo "<script>
+    </body>
+</html>
+
+<script>
 function clicked(e)
 {
     if(!confirm('Start the competition?')) {

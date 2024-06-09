@@ -1,6 +1,7 @@
 Options -MultiViews
 RewriteEngine On
 
+
 RewriteRule ^(.{6}+)/setup$ setup.php?id=$1 [QSA,L]
 RewriteRule ^(.{6}+)/pairing$ pairingpage.php?id=$1 [QSA,L]
 RewriteRule ^(.{6}+)/ranking$ ranking.php?id=$1 [QSA,L]
