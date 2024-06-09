@@ -4,8 +4,16 @@ rm -rf /var/www/html
 git clone https://github.com/Spheroman/ThingRanker.git /var/www/html
 ROOTPASS=""
 USERPASS=""
-read -pr "New Database Root Password: " ROOTPASS
-read -pr "ThingRanker Database User Password: " USERPASS
+read -rp "New Database Root Password: " ROOTPASS
+if [ -z "$ROOTPASS" ]; then
+    echo "Root password cannot be empty. Please run the script again."
+    exit 1
+fi
+read -rp "ThingRanker Database User Password: " USERPASS
+if [ -z "$USERPASS" ]; then
+    echo "User password cannot be empty. Please run the script again."
+    exit 1
+fi
 PHPINI=$(php -i | grep /.+/php.ini -oE)
 echo -e "extension=pdo.so\nextension=pdo_mysql.so" >> "$PHPINI"
 mysql -e "ALTER USER root@localhost IDENTIFIED BY '$ROOTPASS'"
