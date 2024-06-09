@@ -94,7 +94,11 @@ box-sizing: border-box;
 }
 
 @media (max-width: 800px) {
-    td{
+    section{
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+    td, th{
         font-size: 4vw;
     }
 }
