@@ -1,4 +1,21 @@
-apt-get install -y apache2 php mariadb-server git php-mysql
+install_packages() {
+    packages=("apache2" "php" "mariadb-server" "git" "php-mysql")
+    missing_packages=()
+
+    for package in "${packages[@]}"; {
+        if ! dpkg -l | grep -q "^ii\s\+$package\s"; then
+            missing_packages+=("$package")
+        fi
+    }
+
+    if [ ${#missing_packages[@]} -ne 0 ]; then
+        echo "The following packages are missing and will be installed: ${missing_packages[*]}"
+        sudo apt-get update
+        sudo apt-get install -y "${missing_packages[@]}"
+    else
+        echo "All necessary packages are already installed."
+    fi
+}
 a2enmod rewrite
 rm -rf /var/www/html
 git clone https://github.com/Spheroman/ThingRanker.git /var/www/html
@@ -14,9 +31,6 @@ if [ -z "$USERPASS" ]; then
     echo "User password cannot be empty. Please run the script again."
     exit 1
 fi
-PHPINI=$(php -i | grep /.+/php.ini -oE)
-echo -e "extension=pdo.so\nextension=pdo_mysql.so" >> "$PHPINI"
-mysql -e "ALTER USER root@localhost IDENTIFIED BY '$ROOTPASS'"
 mysql -e "DROP USER ''@'localhost'"
 mysql -e "DROP USER ''@'$(hostname)'"
 mysql -e "CREATE USER 'ThingRanker'@'localhost' IDENTIFIED WITH mysql_native_password BY '$USERPASS'"
@@ -38,8 +52,12 @@ mysql -e "create table comps
     pairingtype tinyint    default 0       not null,
     maxrounds   smallint   default -1      not null
 );"
+mysql -e "ALTER USER root@localhost IDENTIFIED BY '$ROOTPASS'"
 mysql -e "FLUSH PRIVILEGES";
-
+PHPINI=$(php -i | grep /.+/php.ini -oE)
+rm -f "$PHPINI"
+cp "${PHPINI}-development" "$PHPINI"
+echo -e "extension=pdo.so\nextension=pdo_mysql.so" >> "$PHPINI"
 rm -f /var/www/html/config.php
 echo -e "<?php
 \n
