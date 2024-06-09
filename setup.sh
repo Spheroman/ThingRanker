@@ -50,6 +50,6 @@ const DB_PASS = '$USERPASS';\n
 const DB_NAME = 'ThingRanker';\n" >> /var/www/html/config.php
 
 sed -i '172 c\
-> AllowOverride All' /etc/apache2/apache2.conf
+  AllowOverride All' /etc/apache2/apache2.conf
 
 systemctl restart apache2
