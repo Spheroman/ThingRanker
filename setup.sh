@@ -1,20 +1,3 @@
-
-packages=("apache2" "php" "mariadb-server" "git" "php-mysql")
-missing_packages=()
-
-for package in "${packages[@]}"; {
-    if ! dpkg -l | grep -q "^ii\s\+$package\s"; then
-        missing_packages+=("$package")
-    fi
-}
-
-if [ ${#missing_packages[@]} -ne 0 ]; then
-    echo "The following packages are missing and will be installed: ${missing_packages[*]}"
-    sudo apt-get update
-    sudo apt-get install -y "${missing_packages[@]}"
-else
-    echo "All necessary packages are already installed."
-fi
 a2enmod rewrite
 rm -rf /var/www/html
 git clone https://github.com/Spheroman/ThingRanker.git /var/www/html
