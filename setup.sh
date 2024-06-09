@@ -1,3 +1,4 @@
+apt-get install -y apache2 php mariadb-server git php-mysql
 a2enmod rewrite
 rm -rf /var/www/html
 git clone https://github.com/Spheroman/ThingRanker.git /var/www/html
