@@ -13,14 +13,15 @@ if [ -z "$USERPASS" ]; then
     echo "User password cannot be empty. Please run the script again."
     exit 1
 fi
-mysql -e "DROP USER ''@'localhost'"
-mysql -e "DROP USER ''@'$(hostname)'"
-mysql -e "CREATE USER 'ThingRanker'@'localhost' IDENTIFIED WITH mysql_native_password BY '$USERPASS'"
+mysql -e "DROP USER IF EXISTS''@'localhost'"
+mysql -e "DROP USER IF EXISTS ''@'$(hostname)'"
+mysql -e "CREATE USER ThingRanker@localhost IDENTIFIED WITH mysql_native_password BY '$USERPASS'"
 mysql -e "DROP DATABASE IF EXISTS test"
 mysql -e "CREATE DATABASE ThingRanker"
-mysql -e "GRANT PRIVILEGE ON ThingRanker.* TO 'ThingRanker'@'localhost'"
-mysql -e "USE DATABASE ThingRanker";
-mysql -e "create table comps
+mysql -e "GRANT PRIVILEGE ON ThingRanker.* TO ThingRanker@localhost"
+mysql -e "
+USE DATABASE ThingRanker;
+create table comps
 (
     id          char(6)                    not null,
     name        varchar(100)               not null,
@@ -35,10 +36,9 @@ mysql -e "create table comps
     maxrounds   smallint   default -1      not null
 );"
 mysql -e "ALTER USER root@localhost IDENTIFIED BY '$ROOTPASS'"
-mysql -e "FLUSH PRIVILEGES";
 PHPINI=$(php -i | grep /.+/php.ini -oE)
 rm -f "$PHPINI"
-cp "${PHPINI}-development" "$PHPINI"
+curl -sfL "https://raw.githubusercontent.com/php/php-src/master/php.ini-production" >> "$PHPINI"
 echo -e "extension=pdo.so\nextension=pdo_mysql.so" >> "$PHPINI"
 rm -f /var/www/html/config.php
 echo -e "<?php
