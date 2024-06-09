@@ -42,12 +42,12 @@ rm -f "$PHPINI"
 curl -sfL "https://raw.githubusercontent.com/php/php-src/master/php.ini-production" >> "$PHPINI"
 echo -e "\nextension=pdo.so\nextension=pdo_mysql.so" >> "$PHPINI"
 rm -f /var/www/html/config.php
-echo -e "<?php
+printf "<?php
 \n
 const DB_HOST = 'localhost';\n
 const DB_USER = 'ThingRanker';\n
-const DB_PASS = '$USERPASS';\n
-const DB_NAME = 'ThingRanker';\n" >> /var/www/html/config.php
+const DB_PASS = '%s';\n
+const DB_NAME = 'ThingRanker';\n" "$USERPASS" >> /var/www/html/config.php
 
 sed -i '172 c\
   AllowOverride All' /etc/apache2/apache2.conf
