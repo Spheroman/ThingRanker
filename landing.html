@@ -2,46 +2,63 @@
 <html>
     <head>
         <link rel="stylesheet" href="landing.css">
-        <title>Setup</title>
+        <link rel="stylesheet" href="fonts.css">
+        <link rel="stylesheet" href="landinglayout.css">
+        <link rel="stylesheet" href="table.css">
+
+
+
+        <title>Landing</title>
 
     </head>
     <body>
         <h1>Competition Name</h1>
+        <input type="button" class="gear" value="⚙"> 
 
         <section>
-            <div class="list">
-              <ul>
-                <li>Thing1</li>
-                <li>Thing2</li>
-                <li>Thing3</li>
-                <li>Thing4</li>
-                <li>Thing5</li>
-                <li>Thing6</li>
-                <li>Thing7</li>
-                <li>Thing8</li>
-                <li>Thing9</li>
-                <li>Thing10</li>
-                <li>Thing11</li>
-                <li>Thing12</li>
-                <li>Thing13</li>
-                <li>Thing14</li>
-                <li>Thing15</li>
-                <li>Thing16</li>
-                <li>Thing17</li>
-                <li>Thing18</li>
-                <li>Thing19</li>
-                <li>Thing20</li>
-              </ul>
+            <div>
+                <table id="thing-list">
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                </table>
             </div>
         </section>
 
-          <form action="/new.php">
-            <div class="field">
-                <input type="text" class="add" placeholder="+ADD ITEM"/>
-            </div>
-            <input class = "button" type="submit" value="ADD">
-        </form>
-
-        <script src="landing.js"></script>
+        <form>
+            <input id="myInput" type="text" name="userinput" class="add" onfocus="this.value=''" placeholder="+ADD ITEM">
+            <input id="myBtn" type="button" class="button" value="ADD" onclick="AddLi(userinput.value)">
+        </form> 
+        <input class = "start" type="submit" value="START">
     </body>
 </html>

@@ -1,282 +1,78 @@
 <!DOCTYPE html> 
 <html>
     <head>
+        <link rel="stylesheet" href="layout.css">
+        <link rel="stylesheet" href="setup.css">
+        <link rel="stylesheet" href="table.css">
+        <link rel="stylesheet" href="fonts.css">
+
         <title>Setup</title>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Fascinate&family=Fugaz+One&family=Gudea:ital,wght@0,400;0,700;1,400&family=Oxygen:wght@300;400;700&family=Ruluko&display=swap');
-
-            .fugaz-one-regular {
-                font-family: "Fugaz One", sans-serif;
-                font-weight: 400;
-                font-style: normal;
-            }
-            .ruluko-regular {
-                font-family: "Ruluko", sans-serif;
-                font-weight: 400;
-                font-style: normal;
-            }
-            .gudea-regular {
-                font-family: "Gudea", sans-serif;
-                font-weight: 400;
-                font-style: normal;
-            }
-            .oxygen-light {
-                font-family: "Oxygen", sans-serif;
-                font-weight: 300;
-                font-style: normal;
-            }
-            .oxygen-regular {
-                font-family: "Oxygen", sans-serif;
-                font-weight: 400;
-                font-style: normal;
-            }
-            .fascinate-regular {
-                font-family: "Fascinate", system-ui;
-                font-weight: 400;
-                font-style: normal;
-            }
-
-            * {
-                /* text-align: center; */
-            }
-
-            body {
-                background-color: #E6E6D5;
-                position: relative; 
-            	-webkit-font-smoothing: antialiased;
-                margin: 0px;
-            }
-
-            h1{
-                color: #FFFFFF;
-                background-color: #797D4A;
-                font-family: Ruluko;
-                font-size: 2.7vw;
-                padding-left: 6%;
-                padding-right: 6%;
-                padding-top: 1%;
-                padding-bottom: 1%;
-                margin-top: 0%;
-                margin-left: 0%;
-                margin-right: 65%;
-                border-bottom: 1px;
-                border-right: 1px;
-                border-color: #000000;
-            }
-
-            :root {
-                --container-height: 60vh;
-            }
-
-            section {
-                position: center;
-                padding-left: 15%;
-                padding-right: 15%;
-                margin-bottom: 1%;
-            }
-
-            .list {
-                max-height: var(--container-height);
-                border: 2px solid #797D4A;
-                font-family: Gudea;
-                font-size: 1.7vw;
-                border-radius: 5px;
-                scroll-snap-type: y mandatory;
-                overscroll-behavior-y: contain;
-                overflow-x: hidden;
-                overflow-y: auto;
-            }
-
-            @keyframes moveBackground {
-                0% {
-                    background-position: 0 0;
-                }
-                100% {
-                    background-position: 0 calc(var(--container-height) / -1);
-                }
-            }
-
-            ul {
-                margin: 0;
-                padding: 0;
-                list-style: none;
-                background: #FFFFFF;
-            }
-
-            li {
-                padding: 20px;
-                border-top: 1px solid #cccccc;
-                scroll-snap-align: start;
-            }
-
-            li:first-child {
-                border: 0;
-            }
-
-            /* Demo styles */
-
-            *,
-            *::before,
-            *::after {
-            box-sizing: border-box;
-            }
-
-            /* width */
-            ::-webkit-scrollbar {
-                width: 10px;
-            }
-
-            /* Track */
-            ::-webkit-scrollbar-track {
-                background: #cccccc;
-            }
-
-            /* Handle */
-            ::-webkit-scrollbar-thumb {
-                background: #797D4A;
-                border-radius: 10px;
-            }
-
-            /* Handle on hover */
-                ::-webkit-scrollbar-thumb:hover {
-                background: #555834;
-            }
-
-            .reset {
-                border: 2px solid #6191BD;
-                border-radius: 15px;
-                font-family: Fascinate;
-                color: #FFFFFF;
-                font-size: 4.2vw;
-                width: 6.60vw; 
-                height: 6.60vw;
-                background-color: #6191BD;
-                cursor: pointer;
-                transition-duration: 0.2s;
-            }
-                .reset:hover {
-                background-color: #7ab4ea;
-                color: #FFFFFF;
-            }
-
-            .start {
-                border: 2px solid #797D4A;
-                border-radius: 15px;
-                font-family: Fascinate;
-                color: #FFFFFF;
-                font-size: 4.2vw;
-                width: 35%; 
-                height: 1.70em;
-                background-color: #797D4A;
-                cursor: pointer;
-                transition-duration: 0.2s;
-            }
-                .start:hover {
-                background-color: #b8bd74;
-                color: #FFFFFF;
-            }
-
-            .delete {
-                border: 2px solid #9B1515;
-                border-radius: 15px;
-                font-family: Fascinate;
-                color: #FFFFFF;
-                font-size: 4.2vw;
-                width: 6.60vw; 
-                height: 6.60vw;
-                background-color: #9B1515;
-                cursor: pointer;
-                transition-duration: 0.2s;
-                
-            }
-                .delete:hover {
-                background-color: #d11d1d;
-                color: #FFFFFF;
-            }
-
-            @media (max-width: 800px) {
-                h1{
-                    text-align: center;
-                    font-size: 5vw;
-                    margin-right: 0%;
-                    border-right: 0px;
-                    padding: 1.5%;
-                }
-                .list{
-                    font-size: 3vw;
-                }
-                form{
-                    padding-top: 0vh;
-                    padding-bottom: 0vh;
-
-                    input[type='text']{
-                        width: 70vw;
-                        font-size: 3vw;
-                    }
-                }
-                .start{
-                    font-size: 3vw;
-                    width: 70vw;
-                }
-                .delete{
-                    font-size: 3vw;
-                    width: 70vw;
-                }
-                .reset{
-                    font-size: 3vw;
-                    width: 70vw;
-                }
-            }
-        </style>
-
     </head>
     <body>
         <h1>Competition Name</h1>
         
-        <select>
+        <select class="ranking">
+            <option>RANKING TYPE</option>
             <option>The First Option</option>
             <option>Another One</option>
             <option>Bunch of Options Here</option>
-          </select>
+        </select>
+
+        <select class="pairing">
+            <option>PAIRING TYPE</option>
+            <option>The First Option</option>
+            <option>Another One</option>
+            <option>Bunch of Options Here</option>
+        </select>
 
         <section>
-            <div class="list">
-              <ul>
-                <li>Thing1</li>
-                <li>Thing2</li>
-                <li>Thing3</li>
-                <li>Thing4</li>
-                <li>Thing5</li>
-                <li>Thing6</li>
-                <li>Thing7</li>
-                <li>Thing8</li>
-                <li>Thing9</li>
-                <li>Thing10</li>
-                <li>Thing11</li>
-                <li>Thing12</li>
-                <li>Thing13</li>
-                <li>Thing14</li>
-                <li>Thing15</li>
-                <li>Thing16</li>
-                <li>Thing17</li>
-                <li>Thing18</li>
-                <li>Thing19</li>
-                <li>Thing20</li>
-              </ul>
+            <div>
+                <table id="thing-list">
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                    <tr>
+                        <td>first</td>
+                    </tr>
+                </table>
             </div>
-          </section>
-
-        <form action="/new.php">
-            <button class="reset">
-                <svg width="69" height="69" viewBox="0 0 69 69" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M40.2857 43.1429L28.8572 54.5714L40.2857 66" stroke="white" stroke-width="8"/>
-                    <path d="M17.2508 44.5714C15.0494 40.7586 14.1677 36.3259 14.7424 31.9609C15.3171 27.5959 17.316 23.5424 20.4292 20.4293C23.5423 17.3161 27.5957 15.3172 31.9608 14.7425C36.3258 14.1678 40.7585 15.0496 44.5713 17.2509C48.3841 19.4522 51.364 22.8502 53.0489 26.9177C54.7337 30.9853 55.0293 35.4951 53.8898 39.7478C52.7503 44.0005 50.2394 47.7583 46.7465 50.4385C43.2536 53.1187 38.974 54.5714 34.5713 54.5714" stroke="white" stroke-width="8" stroke-linecap="round"/>
-                </svg>                    
-             </button>
+        </section>
+  
+        <form>
+            <input id="myInput" type="text" name="userinput" class="add" onfocus="this.value=''" placeholder="+ADD ITEM">
+            <input id="myBtn" type="button" class="button" value="ADD" onclick="AddLi(userinput.value)">
+            <input type="button" class="reset" value="↻"> 
             <input class = "start" type="submit" value="START">
-            <button class="delete">
-                <object data="delete.svg" width="69" height="69"> </object>                                   
-             </button>
-        </form>
+            <input type="button" class="delete" value="X"> 
+            </form> 
+  
+            <script src="setup.js"></script>
     </body>
 </html>

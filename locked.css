@@ -1,5 +1,16 @@
-:root {
-    --container-height: 50vh;
+h2{
+    font-family: Fugaz One;
+    font-size: 4vw;
+    color: #0D3718;
+    font-weight: 300;
+    margin-top: 14vh;
+}
+
+h3{
+    font-family: Fugaz One;
+    font-size: 3vw;
+    color: #0D3718;
+    font-weight: 300;
 }
 
 form {
@@ -54,32 +65,16 @@ form {
     color: #FFFFFF;
 }
 
-.start {
-    border: 2px solid #797D4A;
-    border-radius: 10px;
-    font-family: Fascinate;
-    color: #FFFFFF;
-    font-size: 3.5vw;
-    width: 35%; 
-    height: 5vw;
-    background-color: #797D4A;
-    cursor: pointer;
-    transition-duration: 0.2s;
-    margin-top: 1vh;
-}
-
-    .start:hover {
-    background-color: #b8bd74;
-    color: #FFFFFF;
-}
-
-.remove {
-    background-color: #c11919;
-    color: #FFFFFF;
-    border-radius: 15px;
-}
-
 @media (max-width: 800px) {
+    h2{
+        font-size: 10vw;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    h3{
+        font-size: 6vw;
+    }
     form{
         padding-top: 2vh;
         padding-bottom: 0vh;
@@ -92,10 +87,5 @@ form {
     .button{
         font-size: 3vw;
         width: 65vw;
-    }
-    .start{
-        font-size: 7vw;
-        width: 65vw;
-        height: 10vw;
     }
 }

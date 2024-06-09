@@ -1,5 +1,12 @@
 :root {
-    --container-height: 50vh;
+    --container-height: 40vh;
+}
+
+.ranking, .pairing{
+    font-size: 1.55vw;
+    padding: 1vh;
+    width: 34%;
+    margin-bottom: 2vh;
 }
 
 form {
@@ -45,12 +52,39 @@ form {
     padding-bottom: 1.5vh;
     font-size: 1.55vw;
     width: 35%; 
+    margin-left: 32.5%;
+    margin-right: 32.5%;
     background-color: #797D4A;
     cursor: pointer;
     transition-duration: 0.2s;
 }
     .button:hover {
     background-color: #b8bd74;
+    color: #FFFFFF;
+}
+
+.remove {
+    background-color: #c11919;
+    color: #FFFFFF;
+    border-radius: 15px;
+}
+
+.reset {
+    border: 2px solid #6191BD;
+    border-radius: 15px;
+    color: #FFFFFF;
+    font-size: 4.2vw;
+    font-weight: 600;
+    width: 5vw; 
+    height: 5vw;
+    background-color: #6191BD;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    margin-top: 3vh;
+    margin-right: 1vw;
+}
+    .reset:hover {
+    background-color: #7ab4ea;
     color: #FFFFFF;
 }
 
@@ -65,7 +99,7 @@ form {
     background-color: #797D4A;
     cursor: pointer;
     transition-duration: 0.2s;
-    margin-top: 1vh;
+    margin-top: 3vh;
 }
 
     .start:hover {
@@ -73,15 +107,38 @@ form {
     color: #FFFFFF;
 }
 
-.remove {
-    background-color: #c11919;
-    color: #FFFFFF;
+.delete {
+    border: 2px solid #9B1515;
     border-radius: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    font-size: 4.2vw;
+    width: 5vw; 
+    height: 5vw;
+    background-color: #9B1515;
+    cursor: pointer;
+    transition-duration: 0.2s;    
+    margin-top: 3vh;
+    margin-left: 1vw;
+}
+
+    .delete:hover {
+    background-color: #d11d1d;
+    color: #FFFFFF;
 }
 
 @media (max-width: 800px) {
+    :root {
+        --container-height: 50vh;
+    }
+    .ranking, .pairing{
+        font-size: 3vw;
+        width: 40%;
+    }
+
     form{
-        padding-top: 2vh;
+        margin-top: 2vw;
+        padding-top: 0vh;
         padding-bottom: 0vh;
 
         input[type='text']{
@@ -92,10 +149,26 @@ form {
     .button{
         font-size: 3vw;
         width: 65vw;
+        margin-top: 1vw;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+    .delete{
+        font-size: 7vw;
+        width: 9vw;
+        height: 9vw;
+        border-radius: 8px;
     }
     .start{
         font-size: 7vw;
-        width: 65vw;
+        width: 50vw;
         height: 10vw;
+    }
+    .reset{
+        font-size: 7vw;
+        width: 9vw;
+        height: 9vw;
+        border-radius: 8px;
+
     }
 }
