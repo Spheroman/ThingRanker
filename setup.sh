@@ -1,4 +1,3 @@
-apt update
 apt-get install -y apache2 php mariadb-server git php-mysql
 a2enmod rewrite
 rm -rf /var/www/html
