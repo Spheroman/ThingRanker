@@ -34,8 +34,8 @@ if (!isValidName($name)) {
     die("Error: 'name' contains invalid characters.");
 }
 
-if (strlen($name) > 255) {
-    die("Error: 'name' is too long. Maximum length is 255 characters.");
+if (strlen($name) > 50) {
+    die("Error: 'name' is too long. Maximum length is 50 characters.");
 }
 
 //Validate if id is valid
