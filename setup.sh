@@ -15,12 +15,12 @@ if [ -z "$USERPASS" ]; then
 fi
 mysql -e "DROP USER IF EXISTS''@'localhost'"
 mysql -e "DROP USER IF EXISTS ''@'$(hostname)'"
-mysql -e "CREATE USER ThingRanker@localhost IDENTIFIED WITH mysql_native_password BY '$USERPASS'"
+mysql -e "CREATE USER ThingRanker@localhost IDENTIFIED WITH mysql_native_password USING PASSWORD('$USERPASS')"
 mysql -e "DROP DATABASE IF EXISTS test"
 mysql -e "CREATE DATABASE ThingRanker"
-mysql -e "GRANT PRIVILEGE ON ThingRanker.* TO ThingRanker@localhost"
+mysql -e "GRANT ALL PRIVILEGES ON ThingRanker.* TO ThingRanker@localhost"
 mysql -e "
-USE DATABASE ThingRanker;
+USE ThingRanker;
 create table comps
 (
     id          char(6)                    not null,
@@ -39,7 +39,7 @@ mysql -e "ALTER USER root@localhost IDENTIFIED BY '$ROOTPASS'"
 PHPINI=$(php -i | grep /.+/php.ini -oE)
 rm -f "$PHPINI"
 curl -sfL "https://raw.githubusercontent.com/php/php-src/master/php.ini-production" >> "$PHPINI"
-echo -e "extension=pdo.so\nextension=pdo_mysql.so" >> "$PHPINI"
+echo -e "\nextension=pdo.so\nextension=pdo_mysql.so" >> "$PHPINI"
 rm -f /var/www/html/config.php
 echo -e "<?php
 \n
@@ -47,5 +47,8 @@ const DB_HOST = 'localhost';\n
 const DB_USER = 'ThingRanker';\n
 const DB_PASS = '$USERPASS';\n
 const DB_NAME = 'ThingRanker';\n" >> /var/www/html/config.php
+
+sed -i '172 c\
+> AllowOverride All' /etc/apache2/apache2.conf
 
 systemctl restart apache2
