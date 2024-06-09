@@ -35,7 +35,7 @@ try {
         FOREIGN KEY(p2) REFERENCES $tmp
     );
     UPDATE comps SET started = 1 WHERE id = :id;
-    UPDATE $id SET rating = 1500, confidence = 500;
+    UPDATE $id SET rating = 1500, variance = 500;
     ");
     $stmt->bindParam(":id", $id);
     $stmt->execute();

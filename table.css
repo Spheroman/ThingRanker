@@ -46,6 +46,12 @@ table, td {
       padding: 20px;
       scroll-snap-align: start;
   }
+    th {
+    font-family: Gudea;
+    font-size: 2vw;
+    padding: .5vw;
+    width: 100%;
+  }
 
   td {
     font-family: Gudea;

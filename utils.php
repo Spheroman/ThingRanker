@@ -36,26 +36,21 @@ function generateRandomString($length = 10): string
 }
 
 // Function to generate table dynamically
-function generateTable(PDO $pdo)
+function generateTable(string $id, PDO $pdo)
 {
     try {
-        // Check if the competition table exists
-        if (!tableCheck($this->id, $pdo)) {
-            echo "Competition table does not exist.";
-            return;
-        }
-
         // Query the competition entries
-        $stmt = $pdo->prepare("SELECT id, name, rating, variance FROM {$this->id} ORDER BY rating DESC");
+        $stmt = $pdo->prepare("SELECT id, name, rating, variance FROM {$id} ORDER BY rating DESC, variance DESC, name ASC");
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = 1;
 
         // Generate the table
-        echo '<table border="1">';
-        echo '<tr><th>ID</th><th>Name</th><th>Rating</th><th>Variance</th></tr>';
+        echo '<table>';
+        echo '<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Variance</th></tr>';
         foreach ($data as $row) {
             echo '<tr>';
-            echo '<td>' . htmlspecialchars($row['id']) . '</td>';
+            echo '<td>' . htmlspecialchars($count++) . '</td>';
             echo '<td>' . htmlspecialchars($row['name']) . '</td>';
             echo '<td>' . htmlspecialchars($row['rating']) . '</td>';
             echo '<td>' . htmlspecialchars($row['variance']) . '</td>';
