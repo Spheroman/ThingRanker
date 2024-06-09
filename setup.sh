@@ -3,8 +3,10 @@ apt-get install -y apache2 php mariadb-server git php-mysql
 a2enmod rewrite
 rm -rf /var/www/html
 git clone https://github.com/Spheroman/ThingRanker.git /var/www/html
-read -p "New Database Root Password: " ROOTPASS
-read -p "ThingRanker Database User Password: " USERPASS
+ROOTPASS=""
+USERPASS=""
+read -pr "New Database Root Password: " ROOTPASS
+read -pr "ThingRanker Database User Password: " USERPASS
 PHPINI=$(php -i | grep /.+/php.ini -oE)
 echo -e "extension=pdo.so\nextension=pdo_mysql.so" >> "$PHPINI"
 mysql -e "ALTER USER root@localhost IDENTIFIED BY '$ROOTPASS'"
