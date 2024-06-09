@@ -2,13 +2,6 @@
     --container-height: 40vh;
 }
 
-.ranking, .pairing{
-    font-size: 1.55vw;
-    padding: 1vh;
-    width: 34%;
-    margin-bottom: 2vh;
-}
-
 form {
     position: relative; 
     display: block; 
