@@ -3,10 +3,10 @@
 require "utils.php";
 require_once "config.php";
 
-$servername="localhost";
-$username="root";
-$password="billybob";
-$dbname="test";
+$servername = DB_HOST;
+$username = DB_USER;
+$password = DB_PASS;
+$dbname = DB_NAME;
 
 // Check if required POST parameters are set
 if (!isset($_POST['id'])) {
