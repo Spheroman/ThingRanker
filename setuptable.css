@@ -22,15 +22,14 @@ table, td, th {
   }
   
   thead {
-      padding-right: 13px;
-      flex: 0 0 auto;
+    flex: 0 0 auto;
   }
   
   tbody {
-      flex: 1 1 auto;
-      display: block;
-      overflow-y: auto;
-      overflow-x: hidden;
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   
     th {
@@ -99,6 +98,6 @@ box-sizing: border-box;
         padding-right: 10%;
     }
     td, th{
-        font-size: 4vw;
+        font-size: 3.5vw;
     }
 }
