@@ -44,9 +44,9 @@ echo "<title>$comp->name</title>
             <table>";
 generateTable($id, $conn);
 echo "            </table></div>
-        </section>     
-        
-        <a href='$id/pairing'><input class = 'start' type='submit' value='START'></a>
-        </body>
+        </section>";
+if($comp->started)
+    echo "<a href='$id/pairing'><input class = 'start' type='submit' value='START'></a>";
+echo "</body>
 </html>";
 
