@@ -12,7 +12,7 @@
         <h1>Competition Name</h1>
         <h2>SHARE!!!</h2>
 
-        <input class="link" onchange="UpdateQRCode(this.value)" type="text" value="link.xyz/joincode" id="link">
+        <input class="link" type="text" value="link.xyz/joincode" id="link">
 
         <div class="tooltip">
         <button class="button" onclick="copyIn()" onmouseout="copyOut()">
@@ -20,18 +20,10 @@
             Copy Link
         </button>
         </div>
-        <br><iframe id="qrcode" src="" width="250" height="250"></iframe>
+        <br><img src="" width="250" height="250">
 
 
-        <script>
-            function UpdateQRCode(val){
-                document.getElementById("qrcode").setAttribute("src","https://api.mimfa.net/qrcode?value="+encodeURIComponent(val)+"&as=value");
-            }
-            document.addEventListener("DOMContentLoaded", function(){
-                UpdateQRCode(document.getElementById("qrcode").value);
-            });
-
-        
+        <script>        
             function copyIn() {
             var copyText = document.getElementById("link");
             copyText.select();
