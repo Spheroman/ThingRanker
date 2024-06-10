@@ -76,6 +76,9 @@ h2{
     color: #FFFFFF;
 }
 
+.qecode{
+    margin-top: 3vh;
+}
 
 @media (max-width: 800px) {
     h2{
