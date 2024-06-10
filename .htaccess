@@ -7,3 +7,7 @@ RewriteRule ^(.{6}+)/pairing$ pairingpage.php?id=$1 [QSA,L]
 RewriteRule ^(.{6}+)/ranking$ ranking.php?id=$1 [QSA,L]
 
 RewriteRule ^(.{6}+)/?$ landing.php?id=$1 [QSA,L]
+
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|html|sql)$">
+    Require all denied
+</FilesMatch>

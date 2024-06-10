@@ -36,7 +36,7 @@ function generateRandomString($length = 10): string
 }
 
 // Function to generate table dynamically
-function generateTable(string $id, PDO $pdo, bool $rank = true)
+function generateTable(string $id, PDO $pdo, bool $rank = true): int
 {
     try {
         // Query the competition entries
@@ -54,7 +54,7 @@ function generateTable(string $id, PDO $pdo, bool $rank = true)
         foreach ($data as $row) {
             echo '<tr>';
             if($rank)
-                echo '<td>' . htmlspecialchars($count++) . '</td>';
+                echo '<td>' . htmlspecialchars($count) . '</td>';
             echo '<td>' . htmlspecialchars($row['name']) . '</td>';
             echo '<td>' . htmlspecialchars($row['rating']) . '</td>';
             echo '<td>' . htmlspecialchars($row['variance']) . '</td>';
@@ -69,8 +69,11 @@ function generateTable(string $id, PDO $pdo, bool $rank = true)
 </td>
                 ";
             echo '</tr>';
+            $count++;
         }
+        return $count;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
+        return 0;
     }
 }

@@ -44,7 +44,7 @@ echo "<title>$comp->name</title>
         <a href='/$id'><h1>$comp->name</h1></a> <section>
             <div>
             <table>";
-generateTable($id, $conn, false);
+$count = generateTable($id, $conn, false);
 echo "
 
 </table></div>
@@ -55,15 +55,21 @@ echo "
 <input type='hidden' name='redirect' value='/setup'>
 <input type='hidden' name='id' value=$id>
 <button type='submit' class='button'>Add Item</button>
-</form>
+</form>";
 
-<form action='/start.php' method='POST'>
+if($count > 2) {
+echo "<form action='/start.php' method='POST'>
 <input type='hidden' name='redirect' value='/pairing'>
 <input type='hidden' name='id' value=$id>
-<button type='submit' onclick='clicked(event)' class='start'>START!</button>
-</form>
+<button type='submit' onclick='clicked(event)' class='start'>";
 
-    </body>
+    if (!$comp->started) echo "START!";
+    else echo "RESTART!";
+
+    echo "</button>
+</form>";
+}
+echo "</body>
 </html>
 
 <script>
