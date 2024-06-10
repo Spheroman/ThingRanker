@@ -49,8 +49,9 @@ h2{
     background-color: #FFF; 
     border: solid 2px #797D4A; 
     border-radius: 4px;
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh;
     box-sizing: border-box; 
-    height: 3.5em; 
     font-size: 1.55vw; 
     color: #353538; 
     font-weight: 600; 
@@ -73,4 +74,14 @@ h2{
     .button:hover {
     background-color: #b8bd74;
     color: #FFFFFF;
+}
+
+
+@media (max-width: 800px) {
+    h2{
+        font-size: 8vw;
+    }
+    .button, .link{
+        font-size: 3.5vw;
+    }
 }
