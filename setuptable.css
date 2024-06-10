@@ -1,0 +1,103 @@
+section {
+    padding-left: 15%;
+    padding-right: 15%;
+    margin-bottom: 1%;
+}
+
+table, td, th {
+    border: 1px solid #828282;
+    border-collapse: collapse;
+    table-layout: auto;
+
+  }
+  
+  table {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    max-height: var(--container-height);
+    table-layout: auto;
+  }
+  
+  thead {
+    flex: 0 0 auto;
+  }
+  
+  tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+    th {
+    background-color: #D4D6BF;
+    font-family: Gudea;
+    font-weight: 400;
+    font-size: 2.5vw;
+    padding: .5vw;
+        width: 100%
+  }
+
+  td {
+    background-color: #FFFFFF;
+    font-family: Gudea;
+    font-size: 2vw;
+    padding: .5vw;
+    width: 100%;
+  }
+
+  tr {
+    width: 100%;
+    padding: 20px;
+    scroll-snap-align: start;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 calc(var(--container-height) / -1);
+    }
+}
+
+/* Demo styles */
+
+*,
+*::before,
+*::after {
+box-sizing: border-box;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #cccccc;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #797D4A;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: #555834;
+}
+
+@media (max-width: 800px) {
+    section{
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+    td, th{
+        font-size: 3.5vw;
+    }
+}

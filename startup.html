@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <title>Welcome!</title>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fascinate&family=Fugaz+One&family=Gudea:ital,wght@0,400;0,700;1,400&family=Oxygen:wght@300;400;700&family=Ruluko&display=swap');
+
+            .fugaz-one-regular {
+                font-family: "Fugaz One", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }
+            .ruluko-regular {
+                font-family: "Ruluko", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }
+            .gudea-regular {
+                font-family: "Gudea", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }
+            .oxygen-light {
+                font-family: "Oxygen", sans-serif;
+                font-weight: 300;
+                font-style: normal;
+            }
+            .oxygen-regular {
+                font-family: "Oxygen", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }
+            .fascinate-regular {
+                font-family: "Fascinate", system-ui;
+                font-weight: 400;
+                font-style: normal;
+            }
+
+            * {
+                text-align: center;
+            }
+
+            body {
+                background-color: #0D3718;
+                position: relative; 
+            	-webkit-font-smoothing: antialiased;
+            }
+
+            h1 {
+            font-family: Fugaz One;
+            font-size: 10vw;
+            color: #E6E6D5;
+            padding-top: 3%;
+            padding-bottom: 0em;
+            margin-bottom: 0em;
+            }
+
+            .tag {
+                font-family: Ruluko;
+                margin-top: 0em;
+                padding-top: 0em;
+                font-size: 2.6vw;
+                color: #D4D6BF;
+            }
+
+            form {
+                position: relative; 
+                display: block; 
+                height: auto; 
+                margin: auto; 
+                padding: 0.55vw;
+                box-sizing: border-box; 
+                font-family: 'Source Sans Pro', sans-serif;
+
+                input[type='text'] {
+                    display: block; 
+                    margin: auto; 
+                    padding: 0.75vw 0.75vw 0.75vw;
+                    background-color: #FFF; 
+                    border: solid 2px #FFF; 
+                    border-radius: 4px;
+                    box-sizing: border-box; 
+                    width:35%; 
+                    height: 3.5em; 
+                    font-size: 1.55vw; 
+                    color: #353538; 
+                    font-weight: 600; 
+                    font-family: inherit;
+                    transition: box-shadow .2s linear, border-color .25s ease-out;
+                }
+                input[type='text']:focus {
+                    outline: none;
+                    box-shadow: 0px 2px 10px rgba(0,0,0,.2);
+                    border: solid 2px #98dcff;
+                }
+                
+                
+                .field {
+                    border: solid 1px black; 
+                    border: none;
+                    margin: auto; 
+                    padding: 0 0 1.5em; 
+                    position: relative;
+
+                    ::placeholder{
+                        color: #b8b8c1;
+                    }
+                    .helper2 {
+                        position: absolute; 
+                        z-index: 1;
+                        font-family: inherit;
+                        bottom: 88%; 
+                        right: 33%;
+                        font-size: 1vw; 
+                        color: #FFF; 
+                        font-weight: 600; 
+                        opacity: 0; 
+                        transition: opacity .2s linear;
+                    }
+                    &.focusWithText {
+                        .helper2 {
+                            opacity: .75;
+                        }
+                    }
+                }
+            }
+            .button {
+                border: 2px solid #797D4A;
+                border-radius: 15px;
+                font-family: Fascinate;
+                color: #FFFFFF;
+                font-size: 4.2vw;
+                width: 35%; 
+                height: 1.70em;
+                background-color: #797D4A;
+                cursor: pointer;
+                transition-duration: 0.2s;
+            }
+                .button:hover {
+                background-color: #b8bd74;
+                color: #FFFFFF;
+            }
+
+            h3 {
+                padding-top: 3em;
+            }
+            .info {
+                font-family: Gudea;
+                font-size: 4vw;
+                font-weight: lighter;
+                color: #FFFFFF;
+            }
+
+            p1, p2 {
+                font-family: Oxygen;
+                font-size: 2.5vw;
+                font-weight: normal;
+                color: #FFFFFF;
+            }
+
+            @media (max-width: 800px){
+                h1{
+                    margin-top: 22%;
+                    font-size: 16vw;
+                }
+                .tag{
+                    font-size: 4vw;
+                }
+                form{
+                    margin: 0%;
+
+                    input[type='text']{
+                        font-size: 3vw;
+                        width: 60%;
+                    }
+                    .field{
+                        .helper2 {
+                            font-size: 2.5vw;
+                            bottom: 85%; 
+                            right: 20%;
+                            font-weight: 500;
+                        }
+                    }
+                }
+                
+                .button{
+                    font-size: 7vw;
+                    width: 60%;
+                    margin-bottom: 22%;
+                    border-radius: 10px;
+                }
+                .info{
+                    font-size: 7vw;
+                }
+                p1, p2{
+                    font-size: 4.5vw;
+                }
+            }
+
+        </style>
+    </head>
+    <body class = "home">
+        
+        <h1>THING RANKER</h1>
+        <p class = "tag">DECIDER FOR THE INDECISIVE</p>
+
+        <form action="/new.php">
+
+            <div class="field">
+                <input type="text" id="comp" class="text" placeholder="Competition"/>
+                <p class="helper helper2">Competition Name</p>
+            </div>
+
+            <input class = "button" type="submit" value="START">
+        </form>
+
+        <h3 class = "info">HOW IT WORKS</h3>
+        <p1>yayyyyyyy filler text</p1>
+        <h4 class = "info">WHY PAIRWISE</h4>
+        <p2>yayyyyyyy moreeeee filler text</p1>
+    </body>
+</html>
+<script>
+    $("#comp").each(function (type) {	
+        $(this).keypress(function () {
+            $(this).parent().addClass("focusWithText");
+        });
+    
+        $(this).blur(function () {
+            if ($(this).val() == "") {
+                $(this).parent().removeClass("focusWithText");
+            }
+        });
+        
+    });
+
+</script>
