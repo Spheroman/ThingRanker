@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="landing.css">
         <link rel="stylesheet" href="fonts.css">
         <link rel="stylesheet" href="landinglayout.css">
-        <link rel="stylesheet" href="table.css">
+        <link rel="stylesheet" href="resultstable.css">
 <?php
 require "comp.php";
 require_once "config.php";
@@ -40,12 +40,13 @@ echo "<title>$comp->name</title>
         <a href='$id/setup'>
         <input type='button' class='gear' value='🛠'> </a>
         <section>
-            <div>";
+            <div>
+            <table>";
 generateTable($id, $conn);
-echo "            </div>
-        </section>     
-        
-        <a href='$id/pairing'><input class = 'start' type='submit' value='START'></a>
-        </body>
+echo "            </table></div>
+        </section>";
+if($comp->started)
+    echo "<a href='$id/pairing'><input class = 'start' type='submit' value='START'></a>";
+echo "</body>
 </html>";
 
