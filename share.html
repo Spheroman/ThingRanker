@@ -1,0 +1,41 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="layout.css">
+        <link rel="stylesheet" href="share.css">
+        <link rel="stylesheet" href="fonts.css">
+        <title>Share</title>
+    </head>
+
+    <body>
+        <h1>Competition Name</h1>
+        <h2>SHARE</h2>
+
+        <input class="link" type="text" value="link.xyz/joincode" id="link">
+
+        <div class="tooltip">
+        <button class="button" onclick="copyIn()" onmouseout="copyOut()">
+            <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+            Copy Link
+        </button>
+        </div>
+
+        <script>
+        function copyIn() {
+        var copyText = document.getElementById("link");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copied: " + copyText.value;
+        }
+
+        function copyOut() {
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copy to clipboard";
+        }
+        </script>
+    </body>
+</html>
