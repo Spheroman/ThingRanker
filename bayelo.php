@@ -6,7 +6,7 @@ function update_ratings(Item $itemA, Item $itemB, $resultA) {
     $expectedA = expected_score($itemA->rating, $itemA->variance, $itemB->rating, $itemB->variance);
     $expectedB = 1 - $expectedA;
 
-    $k = 32; // Sensitivity factor
+    $k = 50; // Sensitivity factor
     $itemA->rating = (int) ($itemA->rating + $k * ($resultA - $expectedA));
     $itemB->rating = (int) ($itemB->rating + $k * ((1 - $resultA) - $expectedB));
 
@@ -23,7 +23,7 @@ function expected_score($ratingA, $varianceA, $ratingB, $varianceB) {
 }
 
 function adjust_variance($currentVariance, $expected, $actual) {
-    $learningRate = 0.2; // Control how quickly the variance changes
+    $learningRate = 0.8; // Control how quickly the variance changes
     $predictionError = abs($expected - $actual);
 
     $newVariance = $currentVariance * (1 + $learningRate * ($predictionError - 0.5));
