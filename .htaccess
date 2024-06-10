@@ -8,6 +8,9 @@ RewriteRule ^(.{6}+)/ranking$ ranking.php?id=$1 [QSA,L]
 
 RewriteRule ^(.{6}+)/?$ landing.php?id=$1 [QSA,L]
 
-<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|html|sql)$">
-    Require all denied
-</FilesMatch>
+RewriteRule ^vendor/(.*)?$ / [F,L]
+RewriteRule ^composer\.(lock|json)$ / [F,L]
+
+RedirectMatch 404 /\.git.*
+RedirectMatch 404 \.(htaccess|htpasswd|ini|log|sh|inc|bak|html|sql|md)$
+

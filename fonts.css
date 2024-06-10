@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fascinate&family=Fugaz+One&family=Gudea:ital,wght@0,400;0,700;1,400&family=Oxygen:wght@300;400;700&family=Ruluko&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fugaz+One&family=Gudea:ital,wght@0,400;0,700;1,400&family=Oxygen:wght@300;400;700&family=Ruluko&display=swap');
 
 .fugaz-one-regular {
     font-family: "Fugaz One", sans-serif;
@@ -22,11 +22,6 @@
 }
 .oxygen-regular {
     font-family: "Oxygen", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-.fascinate-regular {
-    font-family: "Fascinate", system-ui;
     font-weight: 400;
     font-style: normal;
 }
