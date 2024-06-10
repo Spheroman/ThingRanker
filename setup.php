@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta http-equiv="content-type" charset=utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/layout.css">
         <link rel="stylesheet" href="/setup.css">
         <link rel="stylesheet" href="/setuptable.css">

@@ -36,11 +36,11 @@ function generateRandomString($length = 10): string
 }
 
 // Function to generate table dynamically
-function generateTable(string $id, PDO $pdo, bool $sort = true)
+function generateTable(string $id, PDO $pdo, bool $rank = true)
 {
     try {
         // Query the competition entries
-        if($sort)
+        if($rank)
             $stmt = $pdo->prepare("SELECT id, name, rating, variance FROM {$id} ORDER BY rating DESC, variance, name");
         else $stmt = $pdo->prepare("SELECT id, name, rating, variance FROM {$id} ORDER BY id DESC");
         $stmt->execute();
@@ -48,14 +48,26 @@ function generateTable(string $id, PDO $pdo, bool $sort = true)
         $count = 1;
 
         // Generate the table
-
-        echo '<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Variance</th></tr>';
+        if($rank)
+            echo '<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Variance</th></tr>';
+        else echo '<tr><th>Rating</th><th>Variance</th><th>Name</th><th>Delete</th></tr>';
         foreach ($data as $row) {
             echo '<tr>';
-            echo '<td>' . htmlspecialchars($count++) . '</td>';
+            if($rank)
+                echo '<td>' . htmlspecialchars($count++) . '</td>';
             echo '<td>' . htmlspecialchars($row['name']) . '</td>';
             echo '<td>' . htmlspecialchars($row['rating']) . '</td>';
             echo '<td>' . htmlspecialchars($row['variance']) . '</td>';
+            if(!$rank)
+                echo "<td>
+<form action='/remove.php' method='POST'>
+<input type='hidden' name='redirect' value='$id/setup'>
+<input type='hidden' name='id' value=$id>
+<input type='hidden' name='itemid' value={$row['id']}>
+<button type='submit' style='height: 80px; width: 80px; font-size: 20pt'>✖</button>
+</form>
+</td>
+                ";
             echo '</tr>';
         }
     } catch (PDOException $e) {
