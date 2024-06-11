@@ -50,7 +50,7 @@ function generateTable(string $id, PDO $pdo, bool $rank = true): int
         // Generate the table
         if($rank)
             echo '<tr><th>Rank</th><th>Name</th><th>Rating</th><th>Variance</th></tr>';
-        else echo '<tr><th>Rating</th><th>Variance</th><th>Name</th><th>Delete</th></tr>';
+        else echo '<tr><th>Name</th><th>Rating</th><th>Variance</th><th>Delete</th></tr>';
         foreach ($data as $row) {
             echo '<tr>';
             if($rank)
