@@ -1,5 +1,9 @@
 -- Script to set up the comps table. run before testing or server setup
-drop table if exists comps;
+CREATE USER ThingRanker@localhost IDENTIFIED WITH mysql_native_password USING PASSWORD('your password here');
+DROP DATABASE IF EXISTS test;
+CREATE DATABASE ThingRanker;
+GRANT ALL PRIVILEGES ON ThingRanker.* TO ThingRanker@localhost;
+USE ThingRanker;
 create table comps
 (
     id          char(6)                    not null,
@@ -14,3 +18,4 @@ create table comps
     pairingtype tinyint    default 0       not null,
     maxrounds   smallint   default -1      not null
 );
+ALTER USER root@localhost IDENTIFIED BY 'a secure password';
