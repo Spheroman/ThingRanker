@@ -65,7 +65,7 @@ This page will show the rankings of the items after the competition finishes or 
 ## Debian Installation
 To install the project, start by installing apache2, php, mariadb-server, git, and php-mysql using `sudo apt install apache2 php mariadb-server git php-mysql` or your other favorite package manager. Next, run `sudo a2enmod rewrite`. This enables .htaccess files and the RewriteEngine. <br><br>
 To clone the repository into the /var/www/html directory, you can remove the current one with `sudo rm -rf /var/www/html` and clone into it with `git clone "https://github.com/Spheroman/ThingRanker.git" /var/www/html`. <br><br>
-Next, we have to setup the database. If you just installed mariadb, then your default password will be blank and you can log in with `mysql`. If you changed your password already, login using `mysql -p` and run the following commands: <br>
+Next, we have to setup the database. You can either modify the table_setup.sql file to use a new password, then run it with `mysql -e /var/www/html/table_setup.sql`, or you can run the commands manually. If you just installed mariadb, then your default password will be blank and you can log in with `mysql`. If you changed your password already, login using `mysql -p` and run the following commands: <br>
 ```
 CREATE USER ThingRanker@localhost IDENTIFIED WITH mysql_native_password USING PASSWORD('your password here');
 DROP DATABASE IF EXISTS test;
