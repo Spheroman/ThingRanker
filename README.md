@@ -1,6 +1,8 @@
 # ThingRanker
 Rank things using a pairwise competition with Bayesian Elo Ratings
 ## Database
+> :warning: I understand now that this is **NOT** how you structure a relational database. It is a product of its time and should not be referenced anymore.
+
 So the app has 1 preset table and will make more tables as they are needed. Here's an explanation of them: <br> <br>
 This is the comps table, it stores a list of all the different comps along with their options and setup settings, including their name and unique ID.
 <table>
